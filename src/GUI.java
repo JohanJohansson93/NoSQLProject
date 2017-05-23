@@ -120,7 +120,7 @@ public class GUI implements ActionListener {
             }
 
             if (e.getSource() == buttonAddProduct) {
-                productsLabel.setText(productsLabel.getText() + " " + prods.getSelectedItem());
+                productsLabel.setText(productsLabel.getText() + " " + prods.getSelectedItem() + ",");
                 System.out.println("jsdjsdfjdsf");
             }
 
