@@ -33,7 +33,7 @@ public class DatabaseConnector {
         }
     }
 
-    private RiakCluster setUpCluster() throws UnknownHostException{
+    private void setUpCluster() throws UnknownHostException{
         RiakNode node = new RiakNode.Builder()
                 .withRemoteAddress("127.0.0.1")
                 .withRemotePort(8087)
@@ -44,11 +44,10 @@ public class DatabaseConnector {
 
         cluster.start();
 
-        return cluster;
     }
 
     public RiakClient RiakClientObject() throws UnknownHostException {
-        cluster = setUpCluster();
+
         RiakClient client = new RiakClient(cluster);
         System.out.println("Client object successfully created");
 
@@ -112,7 +111,6 @@ public class DatabaseConnector {
 
 
     public void ShutDownCluster() throws UnknownHostException {
-        cluster = setUpCluster();
         cluster.shutdown();
     }
 
@@ -120,7 +118,7 @@ public class DatabaseConnector {
         try{
             DatabaseConnector db = new DatabaseConnector();
            //db.CreateEmplyoee();
-            db.FetchProducts();
+           // db.FetchProducts();
         }catch (Exception e){
             System.out.print(e);
         }
