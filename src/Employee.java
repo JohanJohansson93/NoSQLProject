@@ -1,24 +1,18 @@
+import java.util.Date;
+
 /**
  * Created by Johan on 2017-05-23.
  */
 public class Employee {
     private String  Name;
-    private Date    Start_date;
+    private Date Start_date;
     private Date    End_date;
-    private double  Employment_percent;
-    private Comment CommentList; // Most likely,change this
-    private boolean Type;
-    private int     OrderId;
+    private String Type;
 
 
-    public Employee(String name, Date start_date, Date end_date, double employment_percent, Comment comment, boolean type, int orderId){
+    public Employee(String name,String role){
         this.Name = name;
-        this.Start_date = start_date;
-        this.End_date = end_date;
-        this.Employment_percent = employment_percent;
-        this.Comment = comment;
-        this.Type = type;
-        this.OrderId = orderId;
+        this.Type = role;
     }
 
     public String getName() {
@@ -45,13 +39,7 @@ public class Employee {
         End_date = end_date;
     }
 
-    public double getEmployment_percent() {
-        return Employment_percent;
-    }
-
-    public void setEmployment_percent(double employment_percent) {
-        Employment_percent = employment_percent;
-    }
+    /*
 
     public Comment getComment() {
         return Comment;
@@ -61,19 +49,15 @@ public class Employee {
         Comment = comment;
     }
 
-    public boolean isType() {
+    */
+
+    public String isType() {
         return Type;
     }
 
-    public void setType(boolean type) {
+    public void setType(String type) {
         Type = type;
     }
 
-    public int getOrderId() {
-        return OrderId;
-    }
 
-    public void setOrderId(int orderId) {
-        OrderId = orderId;
-    }
 }
