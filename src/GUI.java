@@ -14,9 +14,15 @@ public class GUI implements ActionListener {
     JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel  ;
     JTextField employeeField, memberField;
     JComboBox prods;
+    Product[] listOfProducts;
+    String[] prodNameList;
+    Controller ctrl;
+    int currentPrice = 0;
+
 
 
     public GUI() {
+        ctrl = new Controller(this);
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -52,13 +58,21 @@ public class GUI implements ActionListener {
         memberField = new JTextField();
 
         productsLabel = new JLabel("Products: ");
+        priceLabel = new JLabel("Price: " + currentPrice);
 
-        String[] products = new String[20];
-        products[0] = "espresso";
-        products[1] = "coffee";
-        products[2] = "cookie";
+        listOfProducts = new Product[4];
 
-        prods = new JComboBox<String>(products);
+        listOfProducts[0] = new Product("Coffee", 2, 3, 25, 1);
+        listOfProducts[1] = new Product("Milk", 1, 2, 15, 2);
+        listOfProducts[2] = new Product("Cookie", 2, 3, 25, 3);
+        listOfProducts[3] = new Product("Lemon", 2, 3, 25, 4);
+        prodNameList = new String[listOfProducts.length];
+
+        for(int i = 0; i < listOfProducts.length; i++ ) {
+            prodNameList[i] = listOfProducts[i].getName();
+        }
+
+        prods = new JComboBox<String>(prodNameList);
 
         chooseLabel = new JLabel("Choose products");
 
@@ -72,6 +86,7 @@ public class GUI implements ActionListener {
 
         panelOrder.add(prods);
         panelOrder.add(productsLabel);
+        panelOrder.add(priceLabel);
         panelOrder.add(buttonAddProduct);
         panelOrder.add(buttonClearProd);
         panelOrder.add(buttonConfirm);
@@ -117,11 +132,19 @@ public class GUI implements ActionListener {
 
             if (e.getSource() == buttonClearProd) {
                 productsLabel.setText("Products: ");
+                currentPrice = 0;
+                priceLabel.setText("Price: " + currentPrice);
             }
 
             if (e.getSource() == buttonAddProduct) {
                 productsLabel.setText(productsLabel.getText() + " " + prods.getSelectedItem() + ",");
-                System.out.println("jsdjsdfjdsf");
+                for(int i = 0; i < listOfProducts.length; i++) {
+                    if (prods.getSelectedItem() == listOfProducts[i].getName()) {
+                        currentPrice = (int) (currentPrice + listOfProducts[i].getDollars());
+                        priceLabel.setText("Price: " + currentPrice);
+                    }
+                }
+
             }
 
         if (e.getSource() == buttonAddMember) {
