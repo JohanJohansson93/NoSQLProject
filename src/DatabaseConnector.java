@@ -22,7 +22,8 @@ public class DatabaseConnector {
     private Location location;
     private FetchValue fetchValue;
     private StoreValue storeValue;
-
+    private RiakClient client;
+    private Namespace Bucket;
 
 
     public DatabaseConnector(){
@@ -31,6 +32,7 @@ public class DatabaseConnector {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        this.client = new RiakClient(cluster);
     }
 
     private void setUpCluster() throws UnknownHostException{
@@ -43,20 +45,22 @@ public class DatabaseConnector {
                 .build();
 
         cluster.start();
-
     }
 
-    public RiakClient RiakClientObject() throws UnknownHostException {
 
-        RiakClient client = new RiakClient(cluster);
-        System.out.println("Client object successfully created");
 
-        return client;
+    public void CreateOrder(Order order) throws ExecutionException, InterruptedException {
+
+            Bucket = new Namespace("maps", "Orders");
+            location = new Location(Bucket, "OrderID");
+
+            storeValue = new StoreValue.Builder(order)
+                    .withLocation(location)
+                    .build();
+
+            client.execute(storeValue);
     }
 
-    public void CreateOrder(Order order){
-
-    }
 
     public void UpdateOrder(){
 
@@ -71,8 +75,8 @@ public class DatabaseConnector {
     public void CreateProducts(ArrayList products) throws UnknownHostException, ExecutionException, InterruptedException {
 
 
-        Namespace productsBucket = new Namespace("maps", "products");
-        location = new Location(productsBucket, "ProductID");
+        Bucket = new Namespace("maps", "products");
+        location = new Location(Bucket, "ProductID");
 
 
         for (Object items: products) {
@@ -81,14 +85,13 @@ public class DatabaseConnector {
                     .build();
         }
 
-        RiakClient client = RiakClientObject();
         client.execute(storeValue);
     }
 
     public void FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
-        RiakClient client = RiakClientObject();
-        Namespace productsBucket = new Namespace("maps", "Employees");
-        location = new Location(productsBucket, "6");
+
+        Bucket = new Namespace("maps", "Employees");
+        location = new Location(Bucket, "9");
         fetchValue = new FetchValue.Builder(location)
                 .build();
         RiakObject productObject = client.execute(fetchValue).getValue(RiakObject.class);
@@ -98,27 +101,29 @@ public class DatabaseConnector {
 
     public void CreateEmplyoee(Employee emp) throws ExecutionException, InterruptedException, UnknownHostException {
 
-        Namespace emplyoeeBucket = new Namespace("maps", "Employees");
-        location = new Location(emplyoeeBucket, "6");
+
+        Bucket = new Namespace("maps", "Employees");
+        location = new Location(Bucket, "9");
 
         storeValue = new StoreValue.Builder(emp)
                 .withLocation(location)
                 .build();
 
-        RiakClient client = RiakClientObject();
         client.execute(storeValue);
     }
 
 
     public void ShutDownCluster() throws UnknownHostException {
         cluster.shutdown();
+        System.out.println("Cluster shutdown succesfully");
     }
 
     public static void main(String [] args){
         try{
             DatabaseConnector db = new DatabaseConnector();
-           //db.CreateEmplyoee();
-           // db.FetchProducts();
+            //db.CreateEmplyoee();
+            db.FetchProducts();
+            db.ShutDownCluster();
         }catch (Exception e){
             System.out.print(e);
         }
