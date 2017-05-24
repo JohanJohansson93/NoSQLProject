@@ -97,7 +97,7 @@ public class DatabaseConnector {
 
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "products");
+        bucket = new Namespace("maps", "Products");
 
         for (Product items: products) {
             location = new Location(bucket, items.getName());

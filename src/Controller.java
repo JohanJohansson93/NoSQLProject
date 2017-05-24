@@ -69,9 +69,9 @@ public class Controller {
 
         listofProducts[0] = new Product("Espresso", 3, 6, 18, espresso);
         listofProducts[1] = new Product("Latte", 2, 6, 12, Latte);
-        listofProducts[3] = new Product("Cappucino", 6, 12, 18, cappucino);
-        listofProducts[4] = new Product("Hot Chocolate", 6, 12, 18, chocolate);
-        listofProducts[5] = new Product("Brewed Coffee", 6, 12, 18, coffee);
+        listofProducts[2] = new Product("Cappucino", 6, 12, 18, cappucino);
+        listofProducts[3] = new Product("Hot Chocolate", 6, 12, 18, chocolate);
+        listofProducts[4] = new Product("Brewed Coffee", 6, 12, 18, coffee);
 
 
 
