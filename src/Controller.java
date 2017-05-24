@@ -50,6 +50,12 @@ public class Controller {
 
     public void Fillproducts() throws InterruptedException, ExecutionException, UnknownHostException {
 
+        Stock [] espresso = new Stock[1];
+        Stock [] Latte = new Stock[2];
+        Stock [] cappucino = new Stock[2];
+        Stock [] chocolate = new Stock[2];
+        Stock [] coffee = new Stock[1];
+
         espresso [0] = new Stock("Espresso Roast", 4);
         Latte [0] = new Stock("Espresso Roast", 4);
         Latte [1] = new Stock("Milk", 4);
@@ -59,6 +65,7 @@ public class Controller {
         chocolate [1] = new Stock("Whipped Cream", 4);
         coffee [0] = new Stock("Whole Bean French Roast", 7);
 
+        Product [] listofProducts = new Product[5];
 
         listofProducts[0] = new Product("Espresso", 3, 6, 18, espresso);
         listofProducts[1] = new Product("Latte", 2, 6, 12, Latte);
