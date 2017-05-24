@@ -75,7 +75,7 @@ public class GUI implements ActionListener {
         memberField = new JTextField();
 
         productsLabel = new JLabel("Products: ");
-        priceLabel = new JLabel("Price: " + currentPrice);
+        priceLabel = new JLabel("" + currentPrice);
 
         listOfProducts = new Product[4];
 
@@ -175,7 +175,7 @@ public class GUI implements ActionListener {
             if (e.getSource() == buttonClearProd) {
                 productsLabel.setText("Products: ");
                 currentPrice = 0;
-                priceLabel.setText("Price: " + currentPrice);
+                priceLabel.setText("" + currentPrice);
                 counter = 0;
             }
 
@@ -184,7 +184,7 @@ public class GUI implements ActionListener {
                 for(int i = 0; i < listOfProducts.length; i++) {
                     if (prods.getSelectedItem() == listOfProducts[i].getName()) {
                         currentPrice = (int) (currentPrice + listOfProducts[i].getDollars());
-                        priceLabel.setText("Price: " + currentPrice);
+                        priceLabel.setText("" + currentPrice);
                         orderList[counter] = listOfProducts[i].getName();
                         counter++;
                     }
@@ -207,12 +207,6 @@ public class GUI implements ActionListener {
                 }
             }
 
-            try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-24");
-            } catch (ParseException e1) {
-                e1.printStackTrace();
-            }
-
             for (int d = 0; d<finalListOfProducts.length; d++) {
                 try {
                     System.out.println(finalListOfProducts[d].getName());
@@ -220,9 +214,24 @@ public class GUI implements ActionListener {
                     System.out.println("null");
                 }
             }
-
-            Order ord = new Order(Double.parseDouble(priceLabel.toString()), false, finalListOfProducts,   )
+            System.out.print(priceLabel.getText());
+            Order ord = new Order(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1 );
+            System.out.println(ord.getPrice());
+            System.out.println(ord.getDate());
+            System.out.println(ord.getOrderID());
+            System.out.println(ord.getProducts());
         }
+
+        }
+
+        public Date getDate() {
+
+        try {
+                return new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-24");
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+                return null;
+            }
 
         }
 
