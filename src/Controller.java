@@ -1,5 +1,7 @@
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -25,28 +27,29 @@ public class Controller {
 
     }
 
-    public void FetchOrders(){
-
+    public void FetchOrders() throws ExecutionException, InterruptedException {
+        db.FetchOrders();
     }
 
     public void DeleteOrder(){
 
     }
 
-    public void CreateProducts(){
+    public void CreateProducts(Product [] products){
 
     }
 
-    public void FetchProducts(){
+    public void FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
+        db.FetchProducts();
 
     }
 
-    public void CreateEmployee(Employee employee){
-
+    public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {
+            db.CreateEmplyoee(employee);
     }
 
-    public void CreateMember(Member member){
-
+    public void CreateMember(Member member) throws ExecutionException, InterruptedException {
+            db.CreateMember(member);
     }
 
     public void ShutdownDB() throws UnknownHostException {
