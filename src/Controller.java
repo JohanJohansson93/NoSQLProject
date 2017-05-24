@@ -22,8 +22,9 @@ public class Controller {
     }
 
 
-    public void CreateOrder(Order order){
+    public void CreateOrder(Order order) throws ExecutionException, InterruptedException {
         Date date;
+        db.CreateOrder(order);
 
     }
 
@@ -31,12 +32,12 @@ public class Controller {
         db.FetchOrders();
     }
 
-    public void DeleteOrder(){
-
+    public void DeleteOrder() throws ExecutionException, InterruptedException {
+        db.DeleteOrder();
     }
 
-    public void CreateProducts(Product [] products){
-
+    public void CreateProducts(Product [] products) throws InterruptedException, ExecutionException, UnknownHostException {
+        db.CreateProducts(products);
     }
 
     public void FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
