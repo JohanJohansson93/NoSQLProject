@@ -221,7 +221,10 @@ public class GUI implements ActionListener {
             System.out.println(ord.getPrice());
             System.out.println(ord.getDate());
             System.out.println(ord.getOrderID());
-            System.out.println(ord.getProducts());
+
+            for (int s = 0; s<ord.getProducts().length ; s++) {
+                System.out.println(ord.getProducts()[s].getName());
+            }
         }
 
         }

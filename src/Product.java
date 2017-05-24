@@ -5,14 +5,14 @@ public class Product {
 
     private String Name;
     private double pounds, dollars, crowns;
-    private Stock [] stock;
+    private String [] string;
 
-    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, Stock [] Stock){
+    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, String [] string){
         this.Name = name;
         this.pounds = PriceinPounds;
         this.dollars = PriceinDollars;
         this.crowns = PriceinCrowns;
-        this.stock = Stock;
+        this.string = string;
     }
 
     public String getName() {
@@ -47,11 +47,11 @@ public class Product {
         this.crowns = crowns;
     }
 
-    public Stock[] getStock() {
-        return stock;
+    public String[] getStock() {
+        return string;
     }
 
-    public void setStock(Stock[] stock) {
-        this.stock = stock;
+    public void setString(String[] string) {
+        this.string = string;
     }
 }

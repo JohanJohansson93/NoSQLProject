@@ -16,7 +16,7 @@ public class Controller {
     private Employee employee;
     private Product product;
     private Product [] listofProducts;
-    private Stock [] espresso, Latte, cappucino, chocolate, coffee;
+    private String [] espresso, Latte, cappucino, chocolate, coffee;
 
 
     public Controller(GUI GUI){
@@ -50,20 +50,20 @@ public class Controller {
 
     public void Fillproducts() throws InterruptedException, ExecutionException, UnknownHostException {
 
-        Stock [] espresso = new Stock[1];
-        Stock [] Latte = new Stock[2];
-        Stock [] cappucino = new Stock[2];
-        Stock [] chocolate = new Stock[2];
-        Stock [] coffee = new Stock[1];
+        espresso = new String[1];
+        Latte = new String[2];
+        cappucino = new String[2];
+        chocolate = new String[2];
+        coffee = new String[1];
 
-        espresso [0] = new Stock("Espresso Roast", 4);
-        Latte [0] = new Stock("Espresso Roast", 4);
-        Latte [1] = new Stock("Milk", 4);
-        cappucino [0] = new Stock("Espresso Roast", 4);
-        cappucino [1] = new Stock("Milk", 4);
-        chocolate [0] = new Stock("Cacao", 4);
-        chocolate [1] = new Stock("Whipped Cream", 4);
-        coffee [0] = new Stock("Whole Bean French Roast", 7);
+        espresso [0] = new String("Espresso Roast");
+        Latte [0] = new String("Espresso Roast");
+        Latte [1] = new String("Milk");
+        cappucino [0] = new String("Espresso Roast");
+        cappucino [1] = new String("Milk");
+        chocolate [0] = new String("Cacao");
+        chocolate [1] = new String("Whipped Cream");
+        coffee [0] = new String("Whole Bean French Roast");
 
         Product [] listofProducts = new Product[5];
 
