@@ -14,7 +14,6 @@ import com.basho.riak.client.core.util.BinaryValue;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -49,6 +48,8 @@ public class DatabaseConnector {
                 .build();
 
         cluster.start();
+
+        System.out.println("Cluster Started");
     }
 
 
@@ -105,9 +106,9 @@ public class DatabaseConnector {
             storeValue = new StoreValue.Builder(items)
                     .withLocation(location)
                     .build();
+            client.execute(storeValue);
         }
 
-        client.execute(storeValue);
     }
 
     private int GetKeys(String buckettype) throws ExecutionException, InterruptedException {

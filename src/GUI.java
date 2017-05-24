@@ -90,6 +90,7 @@ public class GUI implements ActionListener {
         prodNameList = new String[listOfProducts.length];
         orderList = new String[10];
 
+
         for(int i = 0; i < listOfProducts.length; i++ ) {
             prodNameList[i] = listOfProducts[i].getName();
         }
