@@ -5,9 +5,9 @@ public class Product {
 
     private String Name;
     private double pounds, dollars, crowns;
-    private int stockID;
+    private int[] stockID;
 
-    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, int ID){
+    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, int[] ID){
         this.Name = name;
         this.pounds = PriceinPounds;
         this.dollars = PriceinDollars;
@@ -47,11 +47,11 @@ public class Product {
         this.crowns = crowns;
     }
 
-    public int getStockID() {
+    public int[] getStockID() {
         return stockID;
     }
 
-    public void setStockID(int stockID) {
+    public void setStockID(int[] stockID) {
         this.stockID = stockID;
     }
 }

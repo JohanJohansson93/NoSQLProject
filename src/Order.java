@@ -1,5 +1,4 @@
 import java.util.Date;
-import java.util.LinkedList;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -7,18 +6,17 @@ import java.util.LinkedList;
 public class Order {
 
     private double Price;
-    private boolean CustomerType, TransactionComplete;
-    private LinkedList Products;
+    private boolean TransactionComplete;
+    private Product[] products;
     private Date Date;
-    private int ProductID;
+    private int orderID;
 
-    public Order(double price, boolean customerType, boolean transactionComplete, LinkedList products, Date date, int productID){
+    public Order(double price, boolean transactionComplete, Product[] products, Date date, int orderID){
         this.Price = price;
-        this.CustomerType = customerType;
         this.TransactionComplete = transactionComplete;
-        this.Products = products;
+        this.products = products;
         this.Date = date;
-        this.ProductID = productID;
+        this.orderID = orderID;
     }
 
     public double getPrice() {
@@ -29,14 +27,14 @@ public class Order {
         Price = price;
     }
 
-    public boolean isCustomerType() {
+    /*public boolean isCustomerType() {
         return CustomerType;
     }
 
     public void setCustomerType(boolean customerType) {
         CustomerType = customerType;
     }
-
+*/
     public boolean isTransactionComplete() {
         return TransactionComplete;
     }
@@ -45,12 +43,12 @@ public class Order {
         TransactionComplete = transactionComplete;
     }
 
-    public LinkedList getProducts() {
-        return Products;
+    public Product[] getProducts() {
+        return products;
     }
 
-    public void setProducts(LinkedList products) {
-        this.Products = products;
+    public void setProducts(Product[] products) {
+        this.products = products;
     }
 
     public java.util.Date getDate() {
@@ -61,11 +59,11 @@ public class Order {
         Date = date;
     }
 
-    public int getProductID() {
-        return ProductID;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setProductID(int productID) {
-        ProductID = productID;
+    public void setProductID(int orderID) {
+        this.orderID = orderID;
     }
 }

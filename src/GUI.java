@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -15,8 +18,9 @@ public class GUI implements ActionListener {
     JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, employeeCustLabel;
     JTextField employeeField, memberField, employeeCustField;
     JComboBox prods;
-    Product[] listOfProducts;
-    String[] prodNameList;
+    Product[] listOfProducts, finalListOfProducts;
+    String[] prodNameList, orderList;
+    int counter = 0;
     Controller ctrl;
     int currentPrice = 0;
 
@@ -75,11 +79,16 @@ public class GUI implements ActionListener {
 
         listOfProducts = new Product[4];
 
-        listOfProducts[0] = new Product("Coffee", 2, 3, 25, 1);
-        listOfProducts[1] = new Product("Milk", 1, 2, 15, 2);
-        listOfProducts[2] = new Product("Cookie", 2, 3, 25, 3);
-        listOfProducts[3] = new Product("Lemon", 2, 3, 25, 4);
+        int[] stock = new int[2];
+        stock[0] = 1;
+        stock[1] = 2;
+
+        listOfProducts[0] = new Product("Coffee", 2, 3, 25, stock);
+        listOfProducts[1] = new Product("Milk", 1, 2, 15, stock);
+        listOfProducts[2] = new Product("Cookie", 2, 3, 25, stock);
+        listOfProducts[3] = new Product("Lemon", 2, 3, 25, stock);
         prodNameList = new String[listOfProducts.length];
+        orderList = new String[10];
 
         for(int i = 0; i < listOfProducts.length; i++ ) {
             prodNameList[i] = listOfProducts[i].getName();
@@ -167,6 +176,7 @@ public class GUI implements ActionListener {
                 productsLabel.setText("Products: ");
                 currentPrice = 0;
                 priceLabel.setText("Price: " + currentPrice);
+                counter = 0;
             }
 
             if (e.getSource() == buttonAddProduct) {
@@ -175,6 +185,8 @@ public class GUI implements ActionListener {
                     if (prods.getSelectedItem() == listOfProducts[i].getName()) {
                         currentPrice = (int) (currentPrice + listOfProducts[i].getDollars());
                         priceLabel.setText("Price: " + currentPrice);
+                        orderList[counter] = listOfProducts[i].getName();
+                        counter++;
                     }
                 }
             }
@@ -184,7 +196,32 @@ public class GUI implements ActionListener {
         }
 
         if (e.getSource() == buttonConfirm) {
+            finalListOfProducts = new Product[counter];
+            int g = 0;
+            for(int k = 0; k< orderList.length; k++) {
+                for(int l = 0; l<listOfProducts.length; l++) {
+                    if (orderList[k] == listOfProducts[l].getName()) {
+                        finalListOfProducts[g] = listOfProducts[l];
+                        g++;
+                    }
+                }
+            }
 
+            try {
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-24");
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+
+            for (int d = 0; d<finalListOfProducts.length; d++) {
+                try {
+                    System.out.println(finalListOfProducts[d].getName());
+                } catch(NullPointerException np) {
+                    System.out.println("null");
+                }
+            }
+
+            Order ord = new Order(Double.parseDouble(priceLabel.toString()), false, finalListOfProducts,   )
         }
 
         }
