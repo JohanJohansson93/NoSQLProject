@@ -1,4 +1,5 @@
 import java.net.UnknownHostException;
+import java.util.Date;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -19,15 +20,32 @@ public class Controller {
     }
 
 
-    public void CreatePost(){
+    public void CreateOrder(Order order){
+        Date date;
 
     }
 
-    public void UpdatePost(){
+    public void FetchOrders(){
 
     }
 
-    public void DeletePost(){
+    public void DeleteOrder(){
+
+    }
+
+    public void CreateProducts(){
+
+    }
+
+    public void FetchProducts(){
+
+    }
+
+    public void CreateEmployee(Employee employee){
+
+    }
+
+    public void CreateMember(Member member){
 
     }
 

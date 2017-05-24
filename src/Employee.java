@@ -1,12 +1,10 @@
-import java.util.Date;
 
 /**
  * Created by Johan on 2017-05-23.
  */
 public class Employee {
-    private String  Name;
-    private String Start_date, End_date;
-    private String Type;
+
+    private String  Name, Start_date, End_date, Type;
 
 
     public Employee(String name,String type, String Sdate, String Edate){

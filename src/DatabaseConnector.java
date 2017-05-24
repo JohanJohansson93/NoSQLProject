@@ -144,7 +144,7 @@ public class DatabaseConnector {
 
     }
 
-    public void CreateEmplyoee(Employee emp) throws ExecutionException, InterruptedException, UnknownHostException {
+    public void CreateEmplyoee(Employee employee) throws ExecutionException, InterruptedException, UnknownHostException {
 
 
         int key = GetKeys("Employees");
@@ -152,21 +152,21 @@ public class DatabaseConnector {
         bucket = new Namespace("maps", "Employees");
         location = new Location(bucket, Integer.toString(key));
 
-        storeValue = new StoreValue.Builder(emp)
+        storeValue = new StoreValue.Builder(employee)
                 .withLocation(location)
                 .build();
 
         client.execute(storeValue);
     }
 
-    public void CreateMember(Member mem) throws ExecutionException, InterruptedException {
+    public void CreateMember(Member member) throws ExecutionException, InterruptedException {
 
         int key = GetKeys("Members");
 
         bucket = new Namespace("maps", "Members");
         location = new Location(bucket, Integer.toString(key));
 
-        storeValue = new StoreValue.Builder(mem)
+        storeValue = new StoreValue.Builder(member)
                 .withLocation(location)
                 .build();
 
@@ -178,7 +178,7 @@ public class DatabaseConnector {
 
     public void ShutDownCluster() throws UnknownHostException {
         cluster.shutdown();
-        System.out.println("Cluster shutdown succesfully");
+        System.out.println("Cluster shutdown");
     }
 
     public static void main(String [] args){
