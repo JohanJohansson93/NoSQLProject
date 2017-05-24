@@ -9,10 +9,11 @@ import java.awt.event.ActionListener;
 public class GUI implements ActionListener {
 
     JFrame frame;
-    JPanel panelButtons, panelHeader, panelOrder;
-    JButton buttonPlace, buttonReview, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel  ;
-    JTextField employeeField, memberField;
+    JPanel panelButtons, panelHeader, panelOrder, panelReport;
+    JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
+    buttonDateReport, buttonEmployeeDateReport;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, employeeCustLabel;
+    JTextField employeeField, memberField, employeeCustField;
     JComboBox prods;
     Product[] listOfProducts;
     String[] prodNameList;
@@ -29,6 +30,7 @@ public class GUI implements ActionListener {
         frame.setPreferredSize(new Dimension(500, 400));
 
         panelButtons = new JPanel(new FlowLayout());
+        panelReport = new JPanel(new FlowLayout());
 
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
@@ -36,15 +38,23 @@ public class GUI implements ActionListener {
         panelHeader.add(header);
 
         buttonPlace = new JButton("Place order");
-        buttonReview = new JButton("Review order");
+        buttonReport = new JButton("Get report");
         buttonAddMember = new JButton("Add Member");
         buttonAddProduct = new JButton("Add product");
         buttonBack = new JButton("Back");
+        buttonBack2 = new JButton("Back");
         buttonClearProd = new JButton("Clear products");
         buttonConfirm = new JButton("Confirm order");
+        buttonEmployeeDateReport = new JButton("Get list of orders from employee");
+        buttonDateReport = new JButton("Get report from chosen period");
+
+        panelReport.add(buttonDateReport);
+        panelReport.add(buttonEmployeeDateReport);
+        panelReport.add(buttonBack2);
 
         panelButtons.add(buttonPlace);
         panelButtons.add(buttonAddMember);
+        panelButtons.add(buttonReport);
 
         frame.getContentPane().add(panelHeader, BorderLayout.NORTH);
         frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
@@ -53,6 +63,9 @@ public class GUI implements ActionListener {
 
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
+
+        employeeCustLabel = new JLabel("ID for Employee Discount");
+        employeeCustField = new JTextField();
 
         memberLabel = new JLabel("Member ID");
         memberField = new JTextField();
@@ -80,6 +93,9 @@ public class GUI implements ActionListener {
         panelOrder.setLayout(new GridLayout(14,1));
         panelOrder.add(employeeLabel);
         panelOrder.add(employeeField);
+        panelOrder.add(employeeCustLabel);
+        panelOrder.add(employeeCustField);
+
         panelOrder.add(memberLabel);
         panelOrder.add(memberField);
         panelOrder.add(chooseLabel);
@@ -101,11 +117,12 @@ public class GUI implements ActionListener {
     public void addListeners() {
         buttonAddMember.addActionListener(this);
         buttonPlace.addActionListener(this);
-        buttonReview.addActionListener(this);
+        buttonReport.addActionListener(this);
         buttonAddProduct.addActionListener(this);
         buttonConfirm.addActionListener(this);
         buttonClearProd.addActionListener(this);
         buttonBack.addActionListener(this);
+        buttonBack2.addActionListener(this);
     }
 
     @Override
@@ -122,6 +139,14 @@ public class GUI implements ActionListener {
 
             }
 
+            if (e.getSource() == buttonReport) {
+                frame.remove(panelButtons);
+                frame.getContentPane().add(panelReport, BorderLayout.CENTER);
+                frame.invalidate();
+                frame.validate();
+                frame.repaint();
+            }
+
             if(e.getSource() == buttonBack) {
                 frame.remove(panelOrder);
                 frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
@@ -129,6 +154,14 @@ public class GUI implements ActionListener {
                 frame.validate();
                 frame.repaint();
             }
+
+        if(e.getSource() == buttonBack2) {
+            frame.remove(panelReport);
+            frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
 
             if (e.getSource() == buttonClearProd) {
                 productsLabel.setText("Products: ");
@@ -144,10 +177,13 @@ public class GUI implements ActionListener {
                         priceLabel.setText("Price: " + currentPrice);
                     }
                 }
-
             }
 
         if (e.getSource() == buttonAddMember) {
+
+        }
+
+        if (e.getSource() == buttonConfirm) {
 
         }
 
