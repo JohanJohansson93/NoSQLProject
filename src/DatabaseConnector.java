@@ -96,13 +96,11 @@ public class DatabaseConnector {
     }
 
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
-
-
+        
         bucket = new Namespace("maps", "products");
-        location = new Location(bucket, "ProductID");
 
-
-        for (Object items: products) {
+        for (Product items: products) {
+            location = new Location(bucket, items.getName());
             storeValue = new StoreValue.Builder(items)
                     .withLocation(location)
                     .build();
