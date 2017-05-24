@@ -87,14 +87,14 @@ public class DatabaseConnector {
 
     public void DeleteOrder() throws ExecutionException, InterruptedException {
         bucket = new Namespace("maps", "Employees");
-        location = new Location(bucket, "10");
+        location = new Location(bucket, "4");
         DeleteValue deleteOp = new DeleteValue.Builder(location)
                 .build();
         client.execute(deleteOp);
         System.out.println("Post Deleted");
     }
 
-    public void CreateProducts(ArrayList products) throws UnknownHostException, ExecutionException, InterruptedException {
+    public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
 
 
         bucket = new Namespace("maps", "products");
@@ -184,9 +184,9 @@ public class DatabaseConnector {
     public static void main(String [] args){
         try{
             DatabaseConnector db = new DatabaseConnector();
-           // db.GetKeys("Employees");
-           db.FetchProducts();
-           // db.DeleteOrder();
+            db.GetKeys("Employees");
+          // db.FetchProducts();
+          //  db.DeleteOrder();
            // db.CreateEmplyoee();
             db.ShutDownCluster();
         }catch (Exception e){
