@@ -80,15 +80,15 @@ public class GUI implements ActionListener {
 
         listOfProducts = new Product[4];
 
-        int[] stock = new int[2];
-        stock[0] = 1;
-        stock[1] = 2;
+        Stock[] stock = new Stock[2];
+        stock[0] = new Stock("milk", 2);
+        stock[1] = new Stock("espresso", 2);
 
-        /*listOfProducts[0] = new Product("Coffee", 2, 3, 25, stock);
+        listOfProducts[0] = new Product("Coffee", 2, 3, 25, stock);
         listOfProducts[1] = new Product("Milk", 1, 2, 15, stock);
         listOfProducts[2] = new Product("Cookie", 2, 3, 25, stock);
         listOfProducts[3] = new Product("Lemon", 2, 3, 25, stock);
-        */prodNameList = new String[listOfProducts.length];
+        prodNameList = new String[listOfProducts.length];
         orderList = new String[10];
 
 
