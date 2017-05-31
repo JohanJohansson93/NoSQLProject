@@ -79,9 +79,12 @@ public class Controller {
     }
 
     public Product [] FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
-        listofProducts = new Product[db.FetchProducts().size()];
-        listofProducts = (Product[]) db.FetchProducts().toArray();
-        db.FetchProducts();
+        ArrayList<Product> productsAL = db.FetchProducts();
+        listofProducts = new Product[productsAL.size()];
+
+        for (int i = 0; i < productsAL.size(); i++) {
+            listofProducts[i] = productsAL.get(i);
+        }
 
         return listofProducts;
     }
