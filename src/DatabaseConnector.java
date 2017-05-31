@@ -139,7 +139,7 @@ public class DatabaseConnector {
     public void FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
         RiakObject obj;
-        ArrayList products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<Product>();
 
         bucket = new Namespace("maps", "Productsv4");
         ListKeys lk = new ListKeys.Builder(bucket).build();
@@ -163,7 +163,7 @@ public class DatabaseConnector {
                         o.get("crowns").getAsDouble(), str));
         }
         for (int i = 0; i < products.size(); i++) {
-            System.out.println(products.get(i));
+            System.out.println(products.get(i).getName());
         }
 
     }
