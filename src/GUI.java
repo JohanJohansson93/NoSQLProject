@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -26,9 +28,9 @@ public class GUI implements ActionListener {
 
 
 
-    public GUI() {
+    public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
         ctrl = new Controller(this);
-        //listOfProducts = ctrl.FetchProducts();
+        listOfProducts = ctrl.FetchProducts();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -80,14 +82,14 @@ public class GUI implements ActionListener {
 
         listOfProducts = new Product[4];
 
-        String[] string = new String[2];
+        /*String[] string = new String[2];
         string[0] = new String("milk");
         string[1] = new String("espresso");
 
         listOfProducts[0] = new Product("Coffee", 2, 3, 25, string);
         listOfProducts[1] = new Product("Milk", 1, 2, 15, string);
         listOfProducts[2] = new Product("Cookie", 2, 3, 25, string);
-        listOfProducts[3] = new Product("Lemon", 2, 3, 25, string);
+        listOfProducts[3] = new Product("Lemon", 2, 3, 25, string);*/
         prodNameList = new String[listOfProducts.length];
         orderList = new String[10];
 
@@ -246,7 +248,15 @@ public class GUI implements ActionListener {
         {
             public void run()
             {
-                GUI gui = new GUI();
+                try {
+                    GUI gui = new GUI();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

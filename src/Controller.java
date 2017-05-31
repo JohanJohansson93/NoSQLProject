@@ -78,9 +78,12 @@ public class Controller {
         db.CreateProducts(listofProducts);
     }
 
-    public void FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
+    public Product [] FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
+        listofProducts = new Product[db.FetchProducts().size()];
+        listofProducts = (Product[]) db.FetchProducts().toArray();
         db.FetchProducts();
 
+        return listofProducts;
     }
 
     public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {

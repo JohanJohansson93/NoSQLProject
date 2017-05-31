@@ -136,7 +136,7 @@ public class DatabaseConnector {
         return key;
     }
 
-    public void FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
+    public ArrayList<Product> FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
         RiakObject obj;
         ArrayList<Product> products = new ArrayList<Product>();
@@ -165,6 +165,8 @@ public class DatabaseConnector {
         for (int i = 0; i < products.size(); i++) {
             System.out.println(products.get(i).getName());
         }
+
+        return products;
 
     }
 
