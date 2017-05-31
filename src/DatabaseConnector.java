@@ -105,7 +105,7 @@ public class DatabaseConnector {
 
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "Productsv4");
+        bucket = new Namespace("maps", "Productsv2.0");
 
         for (Product items: products) {
             System.out.println(items.getName());
@@ -141,7 +141,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Product> products = new ArrayList<Product>();
 
-        bucket = new Namespace("maps", "Productsv4");
+        bucket = new Namespace("maps", "Productsv2.0");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 

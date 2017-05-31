@@ -80,7 +80,6 @@ public class GUI implements ActionListener {
         productsLabel = new JLabel("Products: ");
         priceLabel = new JLabel("" + currentPrice);
 
-        listOfProducts = new Product[4];
 
         /*String[] string = new String[2];
         string[0] = new String("milk");
