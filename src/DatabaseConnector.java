@@ -4,16 +4,24 @@ import com.basho.riak.client.api.commands.kv.FetchValue;
 import com.basho.riak.client.api.commands.kv.ListKeys;
 import com.basho.riak.client.api.commands.kv.StoreValue;
 import com.basho.riak.client.api.commands.mapreduce.BucketMapReduce;
+import com.basho.riak.client.api.convert.JSONConverter;
 import com.basho.riak.client.core.RiakCluster;
 import com.basho.riak.client.core.RiakNode;
 import com.basho.riak.client.core.query.Location;
 import com.basho.riak.client.core.query.Namespace;
 import com.basho.riak.client.core.query.RiakObject;
 import com.basho.riak.client.core.util.BinaryValue;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.*;
 
-
+import javax.xml.datatype.DatatypeConstants;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -97,14 +105,17 @@ public class DatabaseConnector {
 
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "Products");
+        bucket = new Namespace("maps", "Productsv4");
 
         for (Product items: products) {
+            System.out.println(items.getName());
+
             location = new Location(bucket, items.getName());
             storeValue = new StoreValue.Builder(items)
                     .withLocation(location)
                     .build();
             client.execute(storeValue);
+
         }
 
     }
@@ -127,7 +138,10 @@ public class DatabaseConnector {
 
     public void FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "Employees");
+        RiakObject obj;
+        ArrayList products = new ArrayList<>();
+
+        bucket = new Namespace("maps", "Productsv4");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -136,10 +150,21 @@ public class DatabaseConnector {
             location = new Location(bucket, l.getKeyAsString());
             fetchValue = new FetchValue.Builder(location)
                     .build();
-            RiakObject productObject = client.execute(fetchValue).getValue(RiakObject.class);
-            System.out.println(productObject.getValue());
-        }
+            FetchValue.Response res = client.execute(fetchValue);
 
+            obj = res.getValue(RiakObject.class);
+
+            JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
+
+                String [] str = new String[1];
+                str[0] = new String(o.get("stock").toString());
+
+                products.add(new Product(o.get("name").getAsString(), o.get("pounds").getAsDouble(), o.get("dollars").getAsDouble(),
+                        o.get("crowns").getAsDouble(), str));
+        }
+        for (int i = 0; i < products.size(); i++) {
+            System.out.println(products.get(i));
+        }
 
     }
 
@@ -183,11 +208,11 @@ public class DatabaseConnector {
     public static void main(String [] args){
         try{
             DatabaseConnector db = new DatabaseConnector();
-            db.GetKeys("Employees");
-          // db.FetchProducts();
+           // db.GetKeys("Employees");
+           db.FetchProducts();
           //  db.DeleteOrder();
            // db.CreateEmplyoee();
-            db.ShutDownCluster();
+           // db.ShutDownCluster();
         }catch (Exception e){
             System.out.print(e);
         }
