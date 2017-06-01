@@ -56,7 +56,7 @@ public class DatabaseConnector {
     public boolean CreateOrder(Order order) throws ExecutionException, InterruptedException {
 
             boolean processed = false;
-
+            System.out.println(GetKeys("Orders"));
             bucket = new Namespace("maps", "Orders");
             location = new Location(bucket, Integer.toString(GetKeys("Orders")));
 
@@ -72,6 +72,8 @@ public class DatabaseConnector {
         if(fetchedObject.getValue().equals(order)){
             processed = true;
         }
+
+        System.out.println(fetchedObject.getValue());
 
         return processed;
     }

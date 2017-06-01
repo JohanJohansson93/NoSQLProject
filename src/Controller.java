@@ -39,6 +39,7 @@ public class Controller {
         if (db.CreateOrder(order)){
             Orderprocessed = true;
         }
+        System.out.println(Orderprocessed);
         return Orderprocessed;
     }
 

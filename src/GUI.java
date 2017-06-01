@@ -30,8 +30,8 @@ public class GUI implements ActionListener {
 
 
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
-        //ctrl = new Controller(this);
-        //listOfProducts = ctrl.FetchProducts();
+        ctrl = new Controller(this);
+        listOfProducts = ctrl.FetchProducts();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -78,6 +78,7 @@ public class GUI implements ActionListener {
         productsLabel = new JLabel("Products: ");
         priceLabel = new JLabel("" + currentPrice);
 
+        /*
         listOfProducts = new Product[4];
 
         String[] string = new String[2];
@@ -88,6 +89,8 @@ public class GUI implements ActionListener {
         listOfProducts[1] = new Product("Milk", 1, 2, 15, string);
         listOfProducts[2] = new Product("Cookie", 2, 3, 25, string);
         listOfProducts[3] = new Product("Lemon", 2, 3, 25, string);
+        */
+
         prodNameList = new String[listOfProducts.length];
         orderList = new String[10];
 
