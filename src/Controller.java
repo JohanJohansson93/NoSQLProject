@@ -12,8 +12,8 @@ public class Controller {
     private DatabaseConnector db;
     private Order order;
     private Member member;
-    private Stock[] stock;
     private Employee employee;
+    private Stock[] stock;
     private Product product;
     private Product [] listofProducts;
     private String [] espresso, Latte, cappucino, chocolate, coffee;
@@ -31,6 +31,31 @@ public class Controller {
 
 
     public boolean CreateOrder(double price, boolean transactionComplete, String [] products, String date, int employeeID) throws ExecutionException, InterruptedException {
+        ArrayList<Product> prods = new ArrayList<>();
+        ArrayList<String> stock1 = new ArrayList<>();
+
+        try {
+            prods = db.FetchProducts();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < prods.size(); i++) {
+            for (int j = 0; j < products.length; j++) {
+                if (prods.get(i).getName() == products[j]) {
+                    for (int k = 0; k < prods.get(i).getStock().length; k++) {
+                        stock1.add(prods.get(i).getStock()[k]);
+                    }
+                }
+            }
+        }
+
+
+        for (int i = 0; i < stock1.size(); i++) {
+            System.out.println(stock1.get(i));
+
+        }
+
 
         boolean Orderprocessed = false;
 
