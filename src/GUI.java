@@ -238,11 +238,12 @@ public class GUI implements ActionListener {
 
         }
 
-        public Date getDate() {
+        public String getDate() {
 
         try {
-                return new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-24");
-            } catch (ParseException e1) {
+                Date date = new Date();
+                return date.toString();
+            } catch (Exception e1) {
                 e1.printStackTrace();
                 return null;
             }
