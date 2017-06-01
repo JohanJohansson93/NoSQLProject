@@ -7,16 +7,18 @@ public class Order {
 
     private double Price;
     private boolean TransactionComplete;
-    private Product[] products;
+    private String[] products;
     private Date Date;
-    private int orderID;
+    private int EmployeeID;
 
-    public Order(double price, boolean transactionComplete, Product[] products, Date date, int orderID){
+
+    public Order(double price, boolean transactionComplete, String[] products, Date date, int employeeID){
         this.Price = price;
         this.TransactionComplete = transactionComplete;
         this.products = products;
         this.Date = date;
-        this.orderID = orderID;
+        this.EmployeeID = employeeID;
+
     }
 
     public double getPrice() {
@@ -27,14 +29,6 @@ public class Order {
         Price = price;
     }
 
-    /*public boolean isCustomerType() {
-        return CustomerType;
-    }
-
-    public void setCustomerType(boolean customerType) {
-        CustomerType = customerType;
-    }
-*/
     public boolean isTransactionComplete() {
         return TransactionComplete;
     }
@@ -43,11 +37,11 @@ public class Order {
         TransactionComplete = transactionComplete;
     }
 
-    public Product[] getProducts() {
+    public String[] getProducts() {
         return products;
     }
 
-    public void setProducts(Product[] products) {
+    public void setProducts(String[] products) {
         this.products = products;
     }
 
@@ -59,11 +53,12 @@ public class Order {
         Date = date;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public int getEmployeeID() {
+        return EmployeeID;
     }
 
-    public void setProductID(int orderID) {
-        this.orderID = orderID;
+    public void setEmployeeID(int employeeID) {
+        EmployeeID = employeeID;
     }
+
 }

@@ -23,15 +23,15 @@ public class Controller {
         this.gui = GUI;
         db = new DatabaseConnector();
         try {
-            Fillproducts();
+           // Fillproducts();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public void CreateOrder(Order order) throws ExecutionException, InterruptedException {
-        Date date;
+    public void CreateOrder(double price, boolean transactionComplete, String [] products, Date date, int employeeID) throws ExecutionException, InterruptedException {
+
         db.CreateOrder(order);
 
     }
@@ -39,11 +39,11 @@ public class Controller {
     public void FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
         db.FetchOrders();
     }
-
+    /*
     public void DeleteOrder(Order order) throws ExecutionException, InterruptedException {
         db.DeleteOrder(order);
     }
-
+    */
     public void CreateProducts(Product [] products) throws InterruptedException, ExecutionException, UnknownHostException {
         db.CreateProducts(products);
     }

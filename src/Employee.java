@@ -7,7 +7,7 @@ public class Employee {
     private String  Name, Start_date, End_date, Type;
 
 
-    public Employee(String name,String type, String Sdate, String Edate){
+    public Employee(String name,String type, String Sdate, String Edate, int [] orderID){
         this.Name = name;
         this.Type = type;
         this.Start_date = Sdate;

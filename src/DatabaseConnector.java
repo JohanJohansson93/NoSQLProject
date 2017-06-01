@@ -57,7 +57,7 @@ public class DatabaseConnector {
 
 
             bucket = new Namespace("maps", "Orders");
-            location = new Location(bucket, Integer.toString(order.getOrderID()));
+            location = new Location(bucket, Integer.toString(GetKeys("Orders")));
 
             storeValue = new StoreValue.Builder(order)
                     .withLocation(location)
@@ -70,7 +70,6 @@ public class DatabaseConnector {
     public ArrayList<Order> FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
 
         ArrayList<Order> orders = new ArrayList<Order>();
-        Product [] productsObject = new Product[1];
 
         bucket = new Namespace("maps", "Orders");
         ListKeys lk = new ListKeys.Builder(bucket).build();
@@ -84,17 +83,14 @@ public class DatabaseConnector {
 
             JsonObject o = new com.google.gson.JsonParser().parse(orderObjects.getValue().toString()).getAsJsonObject();
 
-            ArrayList<Product> products = FetchProducts();
+            String [] products = new String[1];
+            products[0] = new String(o.get("products").toString());
 
-            for (int i = 0; i < products.size(); i++) {
-                productsObject[i] = products.get(i);
-            }
-
-            orders.add(new Order(o.get("price").getAsDouble(), o.get("transactionComplete").getAsBoolean(), productsObject, new Date(o.get("date").toString()),o.get("orderID").getAsInt()));
+            orders.add(new Order(o.get("price").getAsDouble(), o.get("transactionComplete").getAsBoolean(), products, new Date(o.get("date").toString())));
         }
         return orders;
     }
-
+/*
     public void DeleteOrder(Order order) throws ExecutionException, InterruptedException {
         bucket = new Namespace("maps", "Employees");
         location = new Location(bucket, Integer.toString(order.getOrderID()));
@@ -103,10 +99,10 @@ public class DatabaseConnector {
         client.execute(deleteOp);
         System.out.println("Post Deleted");
     }
-
+*/
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "Productsv2.1");
+        bucket = new Namespace("maps", "Productsv2.2");
 
         for (Product items: products) {
 
@@ -117,7 +113,7 @@ public class DatabaseConnector {
             client.execute(storeValue);
         }
     }
-    /*
+
     private int GetKeys(String buckettype) throws ExecutionException, InterruptedException {
 
         int key = 0;
@@ -130,10 +126,9 @@ public class DatabaseConnector {
              ) {
             key = Integer.parseInt(l.getKeyAsString()) + 1;
         }
-        System.out.println(key);
         return key;
     }
-    */
+
 
     public ArrayList<Product> FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
