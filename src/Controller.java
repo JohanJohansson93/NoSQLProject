@@ -12,7 +12,7 @@ public class Controller {
     private DatabaseConnector db;
     private Order order;
     private Member member;
-    private Stock stock;
+    private Stock[] stock;
     private Employee employee;
     private Product product;
     private Product [] listofProducts;
@@ -59,6 +59,14 @@ public class Controller {
 
     public void Fillproducts() throws InterruptedException, ExecutionException, UnknownHostException {
 
+        stock = new Stock[5];
+
+        stock[0] = new Stock("Espresso Roast", 1000);
+        stock[1] = new Stock("Milk", 1000);
+        stock[2] = new Stock("Cacao", 1000);
+        stock[3] = new Stock("Whipped Cream",1000);
+        stock[4] = new Stock("Whole Bean French Roast", 1000);
+
         espresso = new String[1];
         Latte = new String[2];
         cappucino = new String[2];
@@ -84,7 +92,9 @@ public class Controller {
 
 
 
+
         db.CreateProducts(listofProducts);
+        db.FillStock(stock);
     }
 
     public Product [] FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
