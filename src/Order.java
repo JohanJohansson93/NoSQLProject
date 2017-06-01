@@ -8,15 +8,15 @@ public class Order {
     private double Price;
     private boolean TransactionComplete;
     private String[] products;
-    private Date Date;
+    private String date;
     private int EmployeeID;
 
 
-    public Order(double price, boolean transactionComplete, String[] products, Date date, int employeeID){
+    public Order(double price, boolean transactionComplete, String[] products, String Date, int employeeID){
         this.Price = price;
         this.TransactionComplete = transactionComplete;
         this.products = products;
-        this.Date = date;
+        this.date = Date;
         this.EmployeeID = employeeID;
 
     }
@@ -45,12 +45,12 @@ public class Order {
         this.products = products;
     }
 
-    public java.util.Date getDate() {
-        return Date;
+    public String getDate() {
+        return date;
     }
 
-    public void setDate(java.util.Date date) {
-        Date = date;
+    public void setDate(String Date) {
+        date = Date;
     }
 
     public int getEmployeeID() {

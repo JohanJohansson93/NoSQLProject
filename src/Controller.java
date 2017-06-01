@@ -30,7 +30,7 @@ public class Controller {
     }
 
 
-    public boolean CreateOrder(double price, boolean transactionComplete, String [] products, Date date, int employeeID) throws ExecutionException, InterruptedException {
+    public boolean CreateOrder(double price, boolean transactionComplete, String [] products, String date, int employeeID) throws ExecutionException, InterruptedException {
 
         boolean Orderprocessed = false;
 
