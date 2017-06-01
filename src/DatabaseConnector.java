@@ -59,8 +59,8 @@ public class DatabaseConnector {
 
             try {
 
-                bucket = new Namespace("maps", "Orders");
-                location = new Location(bucket, Integer.toString(GetKeys("Orders")));
+                bucket = new Namespace("maps", "Ordersv5");
+                location = new Location(bucket, order.getDate());
 
                 storeValue = new StoreValue.Builder(order)
                         .withLocation(location)
@@ -68,15 +68,18 @@ public class DatabaseConnector {
 
                 client.execute(storeValue);
 
+
                 fetchValue = new FetchValue.Builder(location).build();
                 RiakObject fetchedObject = client.execute(fetchValue).getValue(RiakObject.class);
                 System.out.println("DB: Object placed in DB: " + fetchedObject.getValue());
+
                 processed = true;
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
                 processed = false;
             }
         System.out.println(processed);
+
 
         return processed;
     }
@@ -105,16 +108,7 @@ public class DatabaseConnector {
         }
         return orders;
     }
-/*
-    public void DeleteOrder(Order order) throws ExecutionException, InterruptedException {
-        bucket = new Namespace("maps", "Employees");
-        location = new Location(bucket, Integer.toString(order.getOrderID()));
-        DeleteValue deleteOp = new DeleteValue.Builder(location)
-                .build();
-        client.execute(deleteOp);
-        System.out.println("Post Deleted");
-    }
-*/
+
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
         bucket = new Namespace("maps", "Productsv2.2");
@@ -129,21 +123,42 @@ public class DatabaseConnector {
         }
     }
 
-    private int GetKeys(String buckettype) throws ExecutionException, InterruptedException {
+    public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
-        int key = 0;
+        bucket = new Namespace("maps", "Stock");
 
-        bucket = new Namespace("maps", buckettype);
+        for (Stock items: stock) {
+
+            location = new Location(bucket, items.getName());
+            storeValue = new StoreValue.Builder(items)
+                    .withLocation(location)
+                    .build();
+            client.execute(storeValue);
+        }
+    }
+
+    public ArrayList<Stock> FetchStock() throws ExecutionException, InterruptedException {
+        RiakObject obj;
+        ArrayList<Stock> ingridients = new ArrayList<Stock>();
+
+        bucket = new Namespace("maps", "Stock");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
-        for (Location l: response
-             ) {
-            key = Integer.parseInt(l.getKey().toString()) + 1;
-        }
-        return key;
-    }
+        for (Location l: response){
+            location = new Location(bucket, l.getKeyAsString());
+            fetchValue = new FetchValue.Builder(location)
+                    .build();
+            FetchValue.Response res = client.execute(fetchValue);
 
+            obj = res.getValue(RiakObject.class);
+
+            JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
+
+            ingridients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
+        }
+        return ingridients;
+    }
 
     public ArrayList<Product> FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
