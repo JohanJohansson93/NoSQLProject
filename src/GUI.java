@@ -224,6 +224,14 @@ public class GUI implements ActionListener {
             for (int s = 0; s<ord.getProducts().length ; s++) {
                 System.out.println(ord.getProducts()[s]);
             }
+
+            try {
+                ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1);
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         }
 
         }
