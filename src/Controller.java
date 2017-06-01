@@ -34,6 +34,8 @@ public class Controller {
 
         boolean Orderprocessed = false;
 
+        transactionComplete = true;
+
         order = new Order(price, transactionComplete, products, date, employeeID);
 
         if (db.CreateOrder(order)){

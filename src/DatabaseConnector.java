@@ -56,9 +56,8 @@ public class DatabaseConnector {
     public boolean CreateOrder(Order order) throws ExecutionException, InterruptedException {
 
             boolean processed = false;
-            System.out.println(GetKeys("Orders"));
             bucket = new Namespace("maps", "Orders");
-            location = new Location(bucket, Integer.toString(GetKeys("Orders")));
+            location = new Location(bucket,Integer.toString(GetKeys("Orders")));
 
             storeValue = new StoreValue.Builder(order)
                     .withLocation(location)
@@ -74,6 +73,8 @@ public class DatabaseConnector {
         }
 
         System.out.println(fetchedObject.getValue());
+
+        System.out.println(processed);
 
         return processed;
     }
@@ -136,7 +137,7 @@ public class DatabaseConnector {
 
         for (Location l: response
              ) {
-            key = Integer.parseInt(l.getKeyAsString()) + 1;
+            key = Integer.parseInt(l.getKey().toString()) + 1;
         }
         return key;
     }
