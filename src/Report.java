@@ -1,3 +1,7 @@
+import org.joda.time.Days;
+import org.joda.time.DurationFieldType;
+import org.joda.time.LocalDate;
+
 import java.util.*;
 
 /**
@@ -6,19 +10,18 @@ import java.util.*;
 
 
 public class Report {
-    public static List<Date> getDaysBetweenDates(Date startdate, Date enddate) {
+    public List<Date> getDatesBetweenSpan(Date startDate,Date endDate) {
 
-        // En början iaf...
-        List<Date> dates = new ArrayList<Date>();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startdate);
 
-        while (calendar.getTime().before(enddate))
-        {
-            Date result = calendar.getTime();
-            dates.add(result);
-            calendar.add(Calendar.DATE, 1);
+        List<Date> dates = new ArrayList<Date>(25);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startDate);
+        while (cal.getTime().before(endDate)) { // if or while?
+            cal.add(Calendar.DATE, 1);
+            dates.add(cal.getTime());
+            System.out.println("Dates between span: " + " " + dates);
         }
+
         return dates;
     }
 
