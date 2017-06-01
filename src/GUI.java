@@ -222,7 +222,7 @@ public class GUI implements ActionListener {
 
             try {
                 Boolean processed = false;
-                processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1);
+                processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), Integer.parseInt(employeeField.getText()));
                 if (processed) {
                     System.out.println("GUI: Order placed");
                 } else {
