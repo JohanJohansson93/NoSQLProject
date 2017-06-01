@@ -56,24 +56,26 @@ public class DatabaseConnector {
     public boolean CreateOrder(Order order) throws ExecutionException, InterruptedException {
 
             boolean processed = false;
-            bucket = new Namespace("maps", "Orders");
-            location = new Location(bucket,Integer.toString(GetKeys("Orders")));
 
-            storeValue = new StoreValue.Builder(order)
-                    .withLocation(location)
-                    .build();
+            try {
 
-            client.execute(storeValue);
+                bucket = new Namespace("maps", "Orders");
+                location = new Location(bucket, Integer.toString(GetKeys("Orders")));
 
-        fetchValue = new FetchValue.Builder(location).build();
-        RiakObject fetchedObject = client.execute(fetchValue).getValue(RiakObject.class);
+                storeValue = new StoreValue.Builder(order)
+                        .withLocation(location)
+                        .build();
 
-        if(fetchedObject.getValue().equals(order)){
-            processed = true;
-        }
+                client.execute(storeValue);
 
-        System.out.println(fetchedObject.getValue());
-
+                fetchValue = new FetchValue.Builder(location).build();
+                RiakObject fetchedObject = client.execute(fetchValue).getValue(RiakObject.class);
+                System.out.println("DB: Object placed in DB: " + fetchedObject.getValue());
+                processed = true;
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+                processed = false;
+            }
         System.out.println(processed);
 
         return processed;

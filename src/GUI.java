@@ -221,8 +221,13 @@ public class GUI implements ActionListener {
             }
 
             try {
-                ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1);
-                System.out.println("GUI: Order placed");
+                Boolean processed = false;
+                processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1);
+                if (processed) {
+                    System.out.println("GUI: Order placed");
+                } else {
+                    System.out.println("GUI: Something wrong with order");
+                }
             } catch (ExecutionException e1) {
                 e1.printStackTrace();
             } catch (InterruptedException e1) {
