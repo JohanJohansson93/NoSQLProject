@@ -32,6 +32,7 @@ public class GUI implements ActionListener {
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
         ctrl = new Controller(this);
         listOfProducts = ctrl.FetchProducts();
+        System.out.println("GUI: Products fetched");
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -97,7 +98,6 @@ public class GUI implements ActionListener {
 
         for(int i = 0; i < listOfProducts.length; i++ ) {
             prodNameList[i] = listOfProducts[i].getName();
-            System.out.println(listOfProducts[i].getName());
         }
 
         prods = new JComboBox<String>(prodNameList);
@@ -124,6 +124,7 @@ public class GUI implements ActionListener {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        System.out.println("GUI: Gui complete");
 
     }
 
@@ -218,19 +219,10 @@ public class GUI implements ActionListener {
                     System.out.println("null");
                 }
             }
-            System.out.print(priceLabel.getText());
-            Order ord = new Order(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1 );
-            System.out.println(ord.getPrice());
-            System.out.println(ord.getDate());
-
-
-            for (int s = 0; s<ord.getProducts().length ; s++) {
-                System.out.println(ord.getProducts()[s]);
-
-            }
 
             try {
                 ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1);
+                System.out.println("GUI: Order placed");
             } catch (ExecutionException e1) {
                 e1.printStackTrace();
             } catch (InterruptedException e1) {
