@@ -36,12 +36,12 @@ public class Controller {
 
     }
 
-    public void FetchOrders() throws ExecutionException, InterruptedException {
+    public void FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
         db.FetchOrders();
     }
 
-    public void DeleteOrder() throws ExecutionException, InterruptedException {
-        db.DeleteOrder();
+    public void DeleteOrder(Order order) throws ExecutionException, InterruptedException {
+        db.DeleteOrder(order);
     }
 
     public void CreateProducts(Product [] products) throws InterruptedException, ExecutionException, UnknownHostException {

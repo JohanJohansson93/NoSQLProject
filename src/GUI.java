@@ -95,6 +95,7 @@ public class GUI implements ActionListener {
 
         for(int i = 0; i < listOfProducts.length; i++ ) {
             prodNameList[i] = listOfProducts[i].getName();
+            System.out.println(listOfProducts[i].getName());
         }
 
         prods = new JComboBox<String>(prodNameList);
