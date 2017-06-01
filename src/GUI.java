@@ -17,11 +17,12 @@ public class GUI implements ActionListener {
     JPanel panelButtons, panelHeader, panelOrder, panelReport;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
     buttonDateReport, buttonEmployeeDateReport;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, employeeCustLabel;
-    JTextField employeeField, memberField, employeeCustField;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel;
+    JTextField employeeField, memberField;
     JComboBox prods;
-    Product[] listOfProducts, finalListOfProducts;
-    String[] prodNameList, orderList;
+    JRadioButton radioEmployee, radioMember;
+    Product[] listOfProducts;
+    String[] prodNameList, orderList, finalListOfProducts;
     int counter = 0;
     Controller ctrl;
     int currentPrice = 0;
@@ -29,8 +30,8 @@ public class GUI implements ActionListener {
 
 
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
-        ctrl = new Controller(this);
-        listOfProducts = ctrl.FetchProducts();
+        //ctrl = new Controller(this);
+        //listOfProducts = ctrl.FetchProducts();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -71,24 +72,22 @@ public class GUI implements ActionListener {
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
 
-        employeeCustLabel = new JLabel("ID for Employee Discount");
-        employeeCustField = new JTextField();
-
         memberLabel = new JLabel("Member ID");
         memberField = new JTextField();
 
         productsLabel = new JLabel("Products: ");
         priceLabel = new JLabel("" + currentPrice);
 
+        listOfProducts = new Product[4];
 
-        /*String[] string = new String[2];
+        String[] string = new String[2];
         string[0] = new String("milk");
         string[1] = new String("espresso");
 
         listOfProducts[0] = new Product("Coffee", 2, 3, 25, string);
         listOfProducts[1] = new Product("Milk", 1, 2, 15, string);
         listOfProducts[2] = new Product("Cookie", 2, 3, 25, string);
-        listOfProducts[3] = new Product("Lemon", 2, 3, 25, string);*/
+        listOfProducts[3] = new Product("Lemon", 2, 3, 25, string);
         prodNameList = new String[listOfProducts.length];
         orderList = new String[10];
 
@@ -106,8 +105,6 @@ public class GUI implements ActionListener {
         panelOrder.setLayout(new GridLayout(14,1));
         panelOrder.add(employeeLabel);
         panelOrder.add(employeeField);
-        panelOrder.add(employeeCustLabel);
-        panelOrder.add(employeeCustField);
 
         panelOrder.add(memberLabel);
         panelOrder.add(memberField);
@@ -200,12 +197,12 @@ public class GUI implements ActionListener {
         }
 
         if (e.getSource() == buttonConfirm) {
-            finalListOfProducts = new Product[counter];
+            finalListOfProducts = new String[counter];
             int g = 0;
             for(int k = 0; k< orderList.length; k++) {
                 for(int l = 0; l<listOfProducts.length; l++) {
                     if (orderList[k] == listOfProducts[l].getName()) {
-                        finalListOfProducts[g] = listOfProducts[l];
+                        finalListOfProducts[g] = listOfProducts[l].getName();
                         g++;
                     }
                 }
@@ -213,7 +210,7 @@ public class GUI implements ActionListener {
 
             for (int d = 0; d<finalListOfProducts.length; d++) {
                 try {
-                    System.out.println(finalListOfProducts[d].getName());
+                    System.out.println(finalListOfProducts[d]);
                 } catch(NullPointerException np) {
                     System.out.println("null");
                 }
@@ -222,10 +219,10 @@ public class GUI implements ActionListener {
             Order ord = new Order(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), 1 );
             System.out.println(ord.getPrice());
             System.out.println(ord.getDate());
-            System.out.println(ord.getOrderID());
+
 
             for (int s = 0; s<ord.getProducts().length ; s++) {
-                System.out.println(ord.getProducts()[s].getName());
+                System.out.println(ord.getProducts()[s]);
             }
         }
 
