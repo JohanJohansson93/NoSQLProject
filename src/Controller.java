@@ -30,10 +30,16 @@ public class Controller {
     }
 
 
-    public void CreateOrder(double price, boolean transactionComplete, String [] products, Date date, int employeeID) throws ExecutionException, InterruptedException {
+    public boolean CreateOrder(double price, boolean transactionComplete, String [] products, Date date, int employeeID) throws ExecutionException, InterruptedException {
 
-        db.CreateOrder(order);
+        boolean Orderprocessed = false;
 
+        order = new Order(price, transactionComplete, products, date, employeeID);
+
+        if (db.CreateOrder(order)){
+            Orderprocessed = true;
+        }
+        return Orderprocessed;
     }
 
     public void FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {

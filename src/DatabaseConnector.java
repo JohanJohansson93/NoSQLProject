@@ -53,8 +53,9 @@ public class DatabaseConnector {
 
 
 
-    public void CreateOrder(Order order) throws ExecutionException, InterruptedException {
+    public boolean CreateOrder(Order order) throws ExecutionException, InterruptedException {
 
+            boolean processed = false;
 
             bucket = new Namespace("maps", "Orders");
             location = new Location(bucket, Integer.toString(GetKeys("Orders")));
@@ -64,6 +65,15 @@ public class DatabaseConnector {
                     .build();
 
             client.execute(storeValue);
+
+        fetchValue = new FetchValue.Builder(location).build();
+        RiakObject fetchedObject = client.execute(fetchValue).getValue(RiakObject.class);
+
+        if(fetchedObject.getValue().equals(order)){
+            processed = true;
+        }
+
+        return processed;
     }
 
 
