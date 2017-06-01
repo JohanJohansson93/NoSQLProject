@@ -21,6 +21,6 @@ public class Report {
         }
         return dates;
     }
-
+    public
 }
 
