@@ -86,7 +86,7 @@ public class DatabaseConnector {
             String [] products = new String[1];
             products[0] = new String(o.get("products").toString());
 
-            orders.add(new Order(o.get("price").getAsDouble(), o.get("transactionComplete").getAsBoolean(), products, new Date(o.get("date").toString())));
+            orders.add(new Order(o.get("price").getAsDouble(), o.get("transactionComplete").getAsBoolean(), products, new Date(o.get("date").toString()),o.get("employeeID").getAsInt()));
         }
         return orders;
     }
