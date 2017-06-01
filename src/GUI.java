@@ -225,6 +225,7 @@ public class GUI implements ActionListener {
                 processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), Integer.parseInt(employeeField.getText()));
                 if (processed) {
                     System.out.println("GUI: Order placed");
+                    orderList = new String[10];
                 } else {
                     System.out.println("GUI: Something wrong with order");
                 }
