@@ -1,6 +1,8 @@
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -33,16 +35,20 @@ public class Controller {
     public boolean CreateOrder(double price, boolean transactionComplete, String [] products, String date, int employeeID) throws ExecutionException, InterruptedException {
         ArrayList<Product> prods = new ArrayList<>();
         ArrayList<String> stock1 = new ArrayList<>();
+        ArrayList<String> ingredients = new ArrayList<>();
+        ArrayList<Stock> stocks = new ArrayList<>();
+        ArrayList<Stock> stockObjects = new ArrayList<>();
 
         try {
-            prods = db.FetchProducts();
+            prods = db.FetchProducts(); //onödig operation? Vi hämtar produkterna när GUI:t startar.
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
+
         for (int i = 0; i < prods.size(); i++) {
             for (int j = 0; j < products.length; j++) {
-                if (prods.get(i).getName() == products[j]) {
+                if (prods.get(i).getName().equals(products[j])) {
                     for (int k = 0; k < prods.get(i).getStock().length; k++) {
                         stock1.add(prods.get(i).getStock()[k]);
                     }
@@ -50,12 +56,28 @@ public class Controller {
             }
         }
 
-
+        String [] parts;
         for (int i = 0; i < stock1.size(); i++) {
-            System.out.println(stock1.get(i));
-
+            parts = stock1.get(i).split(",");
+            for (int j = 0; j < parts.length; j++) {
+                    String test = parts[j].replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").replaceAll("\"","");
+                    System.out.println("Item: " + test);
+                    ingredients.add(test);
+            }
         }
 
+        stocks = db.FetchStock();
+
+        for (int i = 0; i < stocks.size(); i++) {
+            for (int j = 0; j < ingredients.size(); j++) {
+                if(stocks.get(i).getName().equals(ingredients.get(j))){
+                    stockObjects.add(stocks.get(i));
+                }
+            }
+        }
+
+        //Anropa db för att uppdatera stock.
+        db.UpdateStock(stocks);
 
         boolean Orderprocessed = false;
 
@@ -92,6 +114,7 @@ public class Controller {
         stock[3] = new Stock("Whipped Cream",1000);
         stock[4] = new Stock("Whole Bean French Roast", 1000);
 
+        /*
         espresso = new String[1];
         Latte = new String[2];
         cappucino = new String[2];
@@ -119,6 +142,7 @@ public class Controller {
 
 
         db.CreateProducts(listofProducts);
+        */
         db.FillStock(stock);
     }
 

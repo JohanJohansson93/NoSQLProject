@@ -1,7 +1,9 @@
+import com.basho.riak.client.api.commands.kv.UpdateValue;
+
 /**
  * Created by Johan on 2017-05-23.
  */
-public class Stock {
+public class Stock extends UpdateValue.Update<Object> {
 
     private String Name;
     private int Amount;
@@ -25,5 +27,11 @@ public class Stock {
 
     public void setAmount(int amount) {
         Amount = amount;
+    }
+
+
+    @Override
+    public Object apply(Object o) {
+        return null;
     }
 }

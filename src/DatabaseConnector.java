@@ -1,13 +1,11 @@
 import com.basho.riak.client.api.RiakClient;
-import com.basho.riak.client.api.commands.kv.DeleteValue;
-import com.basho.riak.client.api.commands.kv.FetchValue;
-import com.basho.riak.client.api.commands.kv.ListKeys;
-import com.basho.riak.client.api.commands.kv.StoreValue;
+import com.basho.riak.client.api.commands.kv.*;
 import com.basho.riak.client.core.RiakCluster;
 import com.basho.riak.client.core.RiakNode;
 import com.basho.riak.client.core.query.Location;
 import com.basho.riak.client.core.query.Namespace;
 import com.basho.riak.client.core.query.RiakObject;
+import com.basho.riak.client.core.util.BinaryValue;
 import com.google.gson.*;
 
 import java.net.UnknownHostException;
@@ -125,7 +123,7 @@ public class DatabaseConnector {
 
     public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "Stock");
+        bucket = new Namespace("maps", "Stockv2");
 
         for (Stock items: stock) {
 
@@ -139,9 +137,9 @@ public class DatabaseConnector {
 
     public ArrayList<Stock> FetchStock() throws ExecutionException, InterruptedException {
         RiakObject obj;
-        ArrayList<Stock> ingridients = new ArrayList<Stock>();
+        ArrayList<Stock> ingredients = new ArrayList<Stock>();
 
-        bucket = new Namespace("maps", "Stock");
+        bucket = new Namespace("maps", "Stockv2");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -152,12 +150,42 @@ public class DatabaseConnector {
             FetchValue.Response res = client.execute(fetchValue);
 
             obj = res.getValue(RiakObject.class);
-
+            System.out.println(obj.getValue());
             JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
 
-            ingridients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
+            ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
         }
-        return ingridients;
+
+        return ingredients;
+
+    }
+    /*
+        Utgå från denna sida: http://docs.basho.com/riak/kv/2.2.3/developing/usage/updating-objects/ för att uppdatera.
+     */
+    public void UpdateStock(ArrayList<Stock> ingredients) throws ExecutionException, InterruptedException {
+
+        bucket = new Namespace("maps", "Stockv2");
+
+
+        for (int i = 0; i < ingredients.size(); i++) {
+            System.out.println("Ingredient:" + ingredients.get(i));
+
+            location = new Location(bucket, ingredients.get(i).getName());
+
+
+            int total = ingredients.get(i).getAmount() - 1;
+
+            System.out.println("DB: ingredient changed " + total);
+
+            Stock stock = new Stock(ingredients.get(i).getName(),total);
+
+
+            UpdateValue updateOp = new UpdateValue.Builder(location)
+                    .withUpdate(stock)
+                    .build();
+            UpdateValue.Response response = client.execute(updateOp);
+        }
+
     }
 
     public ArrayList<Product> FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
@@ -222,9 +250,10 @@ public class DatabaseConnector {
         try{
             DatabaseConnector db = new DatabaseConnector();
            // db.GetKeys("Employees");
-           db.FetchProducts();
+          // db.FetchProducts();
           //  db.DeleteOrder();
            // db.CreateEmplyoee();
+            db.FetchStock();
             db.ShutDownCluster();
         }catch (Exception e){
             System.out.print(e);
