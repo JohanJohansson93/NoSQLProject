@@ -25,7 +25,7 @@ public class Controller {
         this.gui = GUI;
         db = new DatabaseConnector();
         try {
-           // Fillproducts();
+            //Fillproducts();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,8 +36,6 @@ public class Controller {
         ArrayList<Product> prods = new ArrayList<>();
         ArrayList<String> stock1 = new ArrayList<>();
         ArrayList<String> ingredients = new ArrayList<>();
-        ArrayList<Stock> stocks = new ArrayList<>();
-        ArrayList<Stock> stockObjects = new ArrayList<>();
 
         try {
             prods = db.FetchProducts(); //onödig operation? Vi hämtar produkterna när GUI:t startar.
@@ -66,18 +64,9 @@ public class Controller {
             }
         }
 
-        stocks = db.FetchStock();
-
-        for (int i = 0; i < stocks.size(); i++) {
-            for (int j = 0; j < ingredients.size(); j++) {
-                if(stocks.get(i).getName().equals(ingredients.get(j))){
-                    stockObjects.add(stocks.get(i));
-                }
-            }
-        }
 
         //Anropa db för att uppdatera stock.
-        db.UpdateStock(stocks);
+        db.UpdateStock(ingredients);
 
         boolean Orderprocessed = false;
 
@@ -144,6 +133,7 @@ public class Controller {
         db.CreateProducts(listofProducts);
         */
         db.FillStock(stock);
+        System.out.println("Ctrl: Stock filled");
     }
 
     public Product [] FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {

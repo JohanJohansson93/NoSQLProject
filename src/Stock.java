@@ -1,9 +1,8 @@
-import com.basho.riak.client.api.commands.kv.UpdateValue;
 
 /**
  * Created by Johan on 2017-05-23.
  */
-public class Stock extends UpdateValue.Update<Object> {
+public class Stock  {
 
     private String Name;
     private int Amount;
@@ -11,6 +10,9 @@ public class Stock extends UpdateValue.Update<Object> {
     public Stock(String name, int amount){
         this.Name = name;
         this.Amount = amount;
+    }
+    public Stock(){
+
     }
 
     public String getName() {
@@ -30,8 +32,4 @@ public class Stock extends UpdateValue.Update<Object> {
     }
 
 
-    @Override
-    public Object apply(Object o) {
-        return null;
-    }
 }

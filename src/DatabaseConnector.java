@@ -69,14 +69,12 @@ public class DatabaseConnector {
 
                 fetchValue = new FetchValue.Builder(location).build();
                 RiakObject fetchedObject = client.execute(fetchValue).getValue(RiakObject.class);
-                System.out.println("DB: Object placed in DB: " + fetchedObject.getValue());
 
                 processed = true;
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
                 processed = false;
             }
-        System.out.println(processed);
 
 
         return processed;
@@ -123,10 +121,10 @@ public class DatabaseConnector {
 
     public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "Stockv2");
+        bucket = new Namespace("maps", "StockObjects");
 
         for (Stock items: stock) {
-
+            System.out.println("DB FillStock: " + items.getName());
             location = new Location(bucket, items.getName());
             storeValue = new StoreValue.Builder(items)
                     .withLocation(location)
@@ -139,7 +137,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Stock> ingredients = new ArrayList<Stock>();
 
-        bucket = new Namespace("maps", "Stockv2");
+        bucket = new Namespace("maps", "StockObjects");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -150,10 +148,10 @@ public class DatabaseConnector {
             FetchValue.Response res = client.execute(fetchValue);
 
             obj = res.getValue(RiakObject.class);
-            System.out.println(obj.getValue());
             JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
+            System.out.println("DB FetchStock: " + o);
 
-            ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
+           // ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
         }
 
         return ingredients;
@@ -162,28 +160,37 @@ public class DatabaseConnector {
     /*
         Utgå från denna sida: http://docs.basho.com/riak/kv/2.2.3/developing/usage/updating-objects/ för att uppdatera.
      */
-    public void UpdateStock(ArrayList<Stock> ingredients) throws ExecutionException, InterruptedException {
+    public void UpdateStock(ArrayList<String> ingredients) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "Stockv2");
+        RiakObject obj;
 
+        bucket = new Namespace("maps", "StockObjects");
 
         for (int i = 0; i < ingredients.size(); i++) {
-            System.out.println("Ingredient:" + ingredients.get(i));
 
-            location = new Location(bucket, ingredients.get(i).getName());
+            System.out.println("DB: UpdateStock " + ingredients.get(i));
 
+            location = new Location(bucket,ingredients.get(i));
 
-            int total = ingredients.get(i).getAmount() - 1;
+            fetchValue = new FetchValue.Builder(location)
+                    .build();
+            FetchValue.Response res = client.execute(fetchValue);
 
-            System.out.println("DB: ingredient changed " + total);
+            obj = res.getValue(RiakObject.class);
 
-            Stock stock = new Stock(ingredients.get(i).getName(),total);
+            JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
+
+            int total = o.get("amount").getAsInt() - 1;
 
 
             UpdateValue updateOp = new UpdateValue.Builder(location)
-                    .withUpdate(stock)
+                    .withFetchOption(FetchValue.Option.DELETED_VCLOCK, true)
+                    .withUpdate(new UpdateStock(o.get("name").toString(),total))
                     .build();
             UpdateValue.Response response = client.execute(updateOp);
+
+            System.out.println("DB: ingredient changed " + total);
+
         }
 
     }
