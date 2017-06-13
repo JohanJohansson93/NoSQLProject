@@ -177,7 +177,8 @@ public class Controller {
             db.CreateEmplyoee(employee);
     }
 
-    public void CreateMember(Member member) throws ExecutionException, InterruptedException {
+    public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {
+            Member member = new Member(Integer.parseInt(SSN), address, occupation);
             db.CreateMember(member);
     }
 

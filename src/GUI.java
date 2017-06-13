@@ -230,9 +230,13 @@ public class GUI implements ActionListener {
             }
 
         if (e.getSource() == btnAddmember) {
-            memberSSNfield.getText();
-            memberAdressfield.getText();
-            memberOccupationfield.getText();
+            try {
+                ctrl.CreateMember(memberSSNfield.getText(), memberAdressfield.getText(),memberOccupationfield.getText());
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
             memberSSNfield.setText("");
             memberAdressfield.setText("");
             memberOccupationfield.setText("");
