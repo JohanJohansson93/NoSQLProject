@@ -14,11 +14,11 @@ import java.util.concurrent.ExecutionException;
 public class GUI implements ActionListener {
 
     JFrame frame;
-    JPanel panelButtons, panelHeader, panelOrder, panelReport;
+    JPanel panelButtons, panelHeader, panelOrder, panelReport, panelMember;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
-    buttonDateReport, buttonEmployeeDateReport;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel;
-    JTextField employeeField, memberField;
+    buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation;
+    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
     Product[] listOfProducts;
@@ -41,6 +41,7 @@ public class GUI implements ActionListener {
         panelButtons = new JPanel(new FlowLayout());
         panelReport = new JPanel(new FlowLayout());
 
+
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
         header.setFont(new Font("Serif", Font.BOLD, 36));
@@ -49,9 +50,11 @@ public class GUI implements ActionListener {
         buttonPlace = new JButton("Place order");
         buttonReport = new JButton("Get report");
         buttonAddMember = new JButton("Add Member");
+        btnAddmember = new JButton("Add Member");
         buttonAddProduct = new JButton("Add product");
         buttonBack = new JButton("Back");
         buttonBack2 = new JButton("Back");
+        btnbackmember = new JButton("Back");
         buttonClearProd = new JButton("Clear products");
         buttonConfirm = new JButton("Confirm order");
         buttonEmployeeDateReport = new JButton("Get list of orders from employee");
@@ -69,6 +72,30 @@ public class GUI implements ActionListener {
         frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
 
         addListeners();
+
+        memberSSN = new JLabel("SSN");
+        memberSSNfield = new JTextField();
+
+        memberaddress = new JLabel("Address");
+        memberAdressfield = new JTextField();
+
+        memberOccupation = new JLabel("Occupation");
+        memberOccupationfield = new JTextField();
+
+        panelMember = new JPanel(new FlowLayout());
+        panelMember.setLayout(new GridLayout(14,1));
+
+        panelMember.add(memberSSN);
+        panelMember.add(memberSSNfield);
+
+        panelMember.add(memberaddress);
+        panelMember.add(memberAdressfield);
+
+        panelMember.add(memberOccupation);
+        panelMember.add(memberOccupationfield);
+
+        panelMember.add(btnAddmember);
+        panelMember.add(btnbackmember);
 
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
@@ -137,6 +164,8 @@ public class GUI implements ActionListener {
         buttonClearProd.addActionListener(this);
         buttonBack.addActionListener(this);
         buttonBack2.addActionListener(this);
+        btnbackmember.addActionListener(this);
+        btnAddmember.addActionListener(this);
     }
 
     @Override
@@ -150,7 +179,11 @@ public class GUI implements ActionListener {
         }
 
             if (e.getSource() == buttonAddMember) {
-
+                frame.remove(panelButtons);
+                frame.getContentPane().add(panelMember, BorderLayout.CENTER);
+                frame.invalidate();
+                frame.validate();
+                frame.repaint();
             }
 
             if (e.getSource() == buttonReport) {
@@ -196,8 +229,20 @@ public class GUI implements ActionListener {
                 }
             }
 
-        if (e.getSource() == buttonAddMember) {
-
+        if (e.getSource() == btnAddmember) {
+            memberSSNfield.getText();
+            memberAdressfield.getText();
+            memberOccupationfield.getText();
+            memberSSNfield.setText("");
+            memberAdressfield.setText("");
+            memberOccupationfield.setText("");
+        }
+        if (e.getSource() == btnbackmember){
+            frame.remove(panelMember);
+            frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
         }
 
         if (e.getSource() == buttonConfirm) {
