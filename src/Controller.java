@@ -145,32 +145,24 @@ public class Controller {
         return listofProducts;
     }
 
-    public Report createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
+    public ArrayList<Order> createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
+
         DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-        int orderSize = db.FetchOrders().size();
+        ArrayList<Order> orderSize = db.FetchOrders();
+        ArrayList<Order> orders = new ArrayList<Order>();
 
-        for(int i = 0; i < orderSize; i++) {
-
-
-            Order sales = db.FetchOrders().get(i);
-            Date result =  df.parse(sales.getDate());
-            System.out.println(db.FetchOrders().get(i));
-            if(startDate.equals(result) && endDate.equals())
+        for(int i = 0; i < orderSize.size(); i++) {
+            String sales = orderSize.get(i).getDate();
+            Date result =  df.parse(sales);
+            System.out.println(orderSize.get(i));
+            if(result.after(startDate) && result.before(endDate)){
+                orders.add(orderSize.get(i));
+            }
         }
-
-        List<Date> dates = new ArrayList<Date>(25);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startDate);
-
-        while (cal.getTime().before(endDate)) { // if or while?
-            cal.add(Calendar.DATE, 1);
-            dates.add(cal.getTime());
-            System.out.println("Dates between span: " + " " + dates);
+        for (int i = 0; i < orders.size(); i++) {
+            System.out.println();
         }
-
-
-        return dates;
-
+        return orders;
     }
 
     public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {

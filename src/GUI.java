@@ -17,8 +17,8 @@ public class GUI implements ActionListener {
     JPanel panelButtons, panelHeader, panelOrder, panelReport, panelMember;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
     buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation;
-    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate;
+    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, reportSDate, reportEDate;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
     Product[] listOfProducts;
@@ -40,7 +40,7 @@ public class GUI implements ActionListener {
 
         panelButtons = new JPanel(new FlowLayout());
         panelReport = new JPanel(new FlowLayout());
-
+        panelReport.setLayout(new GridLayout(14,1));
 
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
@@ -63,7 +63,6 @@ public class GUI implements ActionListener {
         panelReport.add(buttonDateReport);
         panelReport.add(buttonEmployeeDateReport);
         panelReport.add(buttonBack2);
-
         panelButtons.add(buttonPlace);
         panelButtons.add(buttonAddMember);
         panelButtons.add(buttonReport);
@@ -72,6 +71,18 @@ public class GUI implements ActionListener {
         frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
 
         addListeners();
+
+        reportSdate = new JLabel("StartDate");
+        reportSDate = new JTextField();
+
+        reportEdate = new JLabel("EndDate");
+        reportEDate = new JTextField();
+
+
+        panelReport.add(reportSdate);
+        panelReport.add(reportSDate);
+        panelReport.add(reportEdate);
+        panelReport.add(reportEDate);
 
         memberSSN = new JLabel("SSN");
         memberSSNfield = new JTextField();
@@ -164,6 +175,7 @@ public class GUI implements ActionListener {
         buttonClearProd.addActionListener(this);
         buttonBack.addActionListener(this);
         buttonBack2.addActionListener(this);
+        buttonDateReport.addActionListener(this);
         btnbackmember.addActionListener(this);
         btnAddmember.addActionListener(this);
     }
@@ -192,6 +204,11 @@ public class GUI implements ActionListener {
                 frame.invalidate();
                 frame.validate();
                 frame.repaint();
+            }
+
+            if (e.getSource() == buttonDateReport){
+                //http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component
+                // Implementera datepicker
             }
 
             if(e.getSource() == buttonBack) {

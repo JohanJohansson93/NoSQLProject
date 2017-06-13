@@ -96,6 +96,7 @@ public class DatabaseConnector {
             RiakObject orderObjects = client.execute(fetchValue).getValue(RiakObject.class);
 
             JsonObject o = new com.google.gson.JsonParser().parse(orderObjects.getValue().toString()).getAsJsonObject();
+            System.out.println(o.get("date").toString());
             String [] products = new String[1];
             products[0] = new String(o.get("products").toString());
 
@@ -150,7 +151,7 @@ public class DatabaseConnector {
             JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
             System.out.println("DB FetchStock: " + o);
 
-           // ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
+            ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
         }
 
         return ingredients;
