@@ -38,7 +38,7 @@ public class Controller {
         ArrayList<String> ingredients = new ArrayList<>();
 
         try {
-            prods = db.FetchProducts(); //onödig operation? Vi hämtar produkterna när GUI:t startar.
+            prods = db.FetchProducts();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -58,14 +58,12 @@ public class Controller {
         for (int i = 0; i < stock1.size(); i++) {
             parts = stock1.get(i).split(",");
             for (int j = 0; j < parts.length; j++) {
-                    String test = parts[j].replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").replaceAll("\"","");
-                    System.out.println("Item: " + test);
-                    ingredients.add(test);
+                    String ingredientString = parts[j].replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").replaceAll("\"","");
+                    System.out.println("Item: " + ingredientString);
+                    ingredients.add(ingredientString);
             }
         }
 
-
-        //Anropa db för att uppdatera stock.
         db.UpdateStock(ingredients);
 
         boolean Orderprocessed = false;
