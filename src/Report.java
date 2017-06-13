@@ -10,20 +10,28 @@ import java.util.*;
 
 
 public class Report {
-    public List<Date> getDatesBetweenSpan(Date startDate,Date endDate) {
+    private Date StartDate;
+    private Date EndDate;
 
-
-        List<Date> dates = new ArrayList<Date>(25);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startDate);
-        while (cal.getTime().before(endDate)) { // if or while?
-            cal.add(Calendar.DATE, 1);
-            dates.add(cal.getTime());
-            System.out.println("Dates between span: " + " " + dates);
-        }
-
-        return dates;
+    public Report (Date startDate, Date endDate) {
+        this.StartDate = startDate;
+        this.EndDate = endDate;
+    }
+    /*hej*/
+    public Date getStartDate() {
+        return StartDate;
     }
 
+    public void setStartDate(Date startDate) {
+        StartDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        EndDate = endDate;
+    }
 }
 
