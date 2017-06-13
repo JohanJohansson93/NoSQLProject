@@ -17,7 +17,7 @@ public class Report {
         this.StartDate = startDate;
         this.EndDate = endDate;
     }
-    /*hej*/
+
     public Date getStartDate() {
         return StartDate;
     }
