@@ -1,8 +1,8 @@
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -143,6 +143,34 @@ public class Controller {
         }
 
         return listofProducts;
+    }
+
+    public Report createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+        int orderSize = db.FetchOrders().size();
+
+        for(int i = 0; i < orderSize; i++) {
+
+
+            Order sales = db.FetchOrders().get(i);
+            Date result =  df.parse(sales.getDate());
+            System.out.println(db.FetchOrders().get(i));
+            if(startDate.equals(result) && endDate.equals())
+        }
+
+        List<Date> dates = new ArrayList<Date>(25);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startDate);
+
+        while (cal.getTime().before(endDate)) { // if or while?
+            cal.add(Calendar.DATE, 1);
+            dates.add(cal.getTime());
+            System.out.println("Dates between span: " + " " + dates);
+        }
+
+
+        return dates;
+
     }
 
     public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {
