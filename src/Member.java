@@ -3,12 +3,11 @@
  */
 public class Member {
 
-    private int SSN, OrderID;
+    private int SSN;
     private String Occupation, Address;
 
-    public Member(int ssn, int orderID, String occupation, String address){
+    public Member(int ssn, String occupation, String address){
             this.SSN = ssn;
-            this.OrderID = orderID;
             this.Occupation = occupation;
             this.Address = address;
     };
@@ -19,14 +18,6 @@ public class Member {
 
     public void setSSN(int SSN) {
         this.SSN = SSN;
-    }
-
-    public int getOrderID() {
-        return OrderID;
-    }
-
-    public void setOrderID(int orderID) {
-        OrderID = orderID;
     }
 
     public String getOccupation() {

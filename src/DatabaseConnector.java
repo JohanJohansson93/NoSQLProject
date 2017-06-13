@@ -85,7 +85,7 @@ public class DatabaseConnector {
 
         ArrayList<Order> orders = new ArrayList<Order>();
 
-        bucket = new Namespace("maps", "Orders");
+        bucket = new Namespace("maps", "Ordersv5");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -96,7 +96,6 @@ public class DatabaseConnector {
             RiakObject orderObjects = client.execute(fetchValue).getValue(RiakObject.class);
 
             JsonObject o = new com.google.gson.JsonParser().parse(orderObjects.getValue().toString()).getAsJsonObject();
-
             String [] products = new String[1];
             products[0] = new String(o.get("products").toString());
 
@@ -260,7 +259,8 @@ public class DatabaseConnector {
           // db.FetchProducts();
           //  db.DeleteOrder();
            // db.CreateEmplyoee();
-            db.FetchStock();
+           // db.FetchStock();
+            db.FetchOrders();
             db.ShutDownCluster();
         }catch (Exception e){
             System.out.print(e);
