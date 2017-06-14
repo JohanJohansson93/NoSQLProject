@@ -96,7 +96,7 @@ public class DatabaseConnector {
             RiakObject orderObjects = client.execute(fetchValue).getValue(RiakObject.class);
 
             JsonObject o = new com.google.gson.JsonParser().parse(orderObjects.getValue().toString()).getAsJsonObject();
-            System.out.println(o.get("date").toString());
+           // System.out.println(o.get("date").toString());
             String [] products = new String[1];
             products[0] = new String(o.get("products").toString());
 
@@ -246,6 +246,7 @@ public class DatabaseConnector {
                 .build();
 
         client.execute(storeValue);
+        System.out.println("DB: Member stored");
     }
 
     public void ShutDownCluster() throws UnknownHostException {

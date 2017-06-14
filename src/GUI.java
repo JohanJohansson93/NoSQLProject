@@ -1,12 +1,20 @@
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created by Johan on 2017-05-23.
@@ -26,7 +34,11 @@ public class GUI implements ActionListener {
     int counter = 0;
     Controller ctrl;
     int currentPrice = 0;
-
+    private UtilDateModel model, utilmodel;
+    private Properties p, prop;
+    private JDatePanelImpl datePanel, Jdatepanel;
+    private JDatePickerImpl datePicker, Jdatepicker;
+    private Date selectedSDate, selectedEDate;
 
 
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
@@ -72,17 +84,33 @@ public class GUI implements ActionListener {
 
         addListeners();
 
-        reportSdate = new JLabel("StartDate");
-        reportSDate = new JTextField();
+        reportSdate = new JLabel("Select StartDate");
 
-        reportEdate = new JLabel("EndDate");
-        reportEDate = new JTextField();
+        model = new UtilDateModel();
+        p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("tex.year", "Year");
+        datePanel = new JDatePanelImpl(model, p);
+        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
+        reportEdate = new JLabel("Select EndDate");
+
+        utilmodel = new UtilDateModel();
+        prop = new Properties();
+        prop.put("text.today", "Today");
+        prop.put("text.month", "Month");
+        prop.put("tex.year", "Year");
+        Jdatepanel = new JDatePanelImpl(utilmodel, prop);
+        Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
 
         panelReport.add(reportSdate);
-        panelReport.add(reportSDate);
+        panelReport.add(datePicker);
         panelReport.add(reportEdate);
-        panelReport.add(reportEDate);
+        panelReport.add(Jdatepicker);
+
+        selectedSDate = (Date) datePicker.getModel().getValue();
+        selectedEDate = (Date) Jdatepicker.getModel().getValue();
 
         memberSSN = new JLabel("SSN");
         memberSSNfield = new JTextField();
@@ -209,6 +237,18 @@ public class GUI implements ActionListener {
             if (e.getSource() == buttonDateReport){
                 //http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component
                 // Implementera datepicker
+                try {
+                    ctrl.createReport(selectedSDate,selectedEDate);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                } catch (ExecutionException e2) {
+                    e2.printStackTrace();
+                } catch (UnknownHostException e3) {
+                    e3.printStackTrace();
+                } catch (ParseException e4) {
+                    e4.printStackTrace();
+                }
+                System.out.println("GUI: Dates selected");
             }
 
             if(e.getSource() == buttonBack) {

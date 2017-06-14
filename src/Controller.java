@@ -145,24 +145,26 @@ public class Controller {
         return listofProducts;
     }
 
-    public ArrayList<Order> createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
+    public void createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
 
-        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
         ArrayList<Order> orderSize = db.FetchOrders();
         ArrayList<Order> orders = new ArrayList<Order>();
 
         for(int i = 0; i < orderSize.size(); i++) {
-            String sales = orderSize.get(i).getDate();
+            String sales = orderSize.get(i).getDate().replaceAll("\"","").replaceAll("\"","");
+            System.out.println("CTRL Dates: " + sales);
+
             Date result =  df.parse(sales);
-            System.out.println(orderSize.get(i));
+
             if(result.after(startDate) && result.before(endDate)){
                 orders.add(orderSize.get(i));
             }
         }
         for (int i = 0; i < orders.size(); i++) {
-            System.out.println();
+            System.out.println("Ctrl: Orders " + orders.get(i).getDate());
         }
-        return orders;
+        //return orders;
     }
 
     public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {
@@ -172,6 +174,7 @@ public class Controller {
     public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {
             Member member = new Member(Integer.parseInt(SSN), address, occupation);
             db.CreateMember(member);
+            System.out.println("Ctrl: CreateMember method called");
     }
 
     public void ShutdownDB() throws UnknownHostException {
