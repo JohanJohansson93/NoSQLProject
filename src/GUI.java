@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -26,7 +27,7 @@ public class GUI implements ActionListener {
     JPanel panelButtons, panelHeader, panelOrder, panelReport, panelMember;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
     buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate, SalesArea;
     JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, reportSDate, reportEDate;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
@@ -40,6 +41,8 @@ public class GUI implements ActionListener {
     private JDatePanelImpl datePanel, Jdatepanel;
     private JDatePickerImpl datePicker, Jdatepicker;
     private Date selectedSDate, selectedEDate;
+    private JTextArea salesTextArea;
+    private JScrollPane scrollPane;
 
 
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
@@ -105,13 +108,18 @@ public class GUI implements ActionListener {
         Jdatepanel = new JDatePanelImpl(utilmodel, prop);
         Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
 
+        SalesArea = new JLabel("Sales");
+        salesTextArea = new JTextArea("", 10, 20);
+        scrollPane = new JScrollPane(salesTextArea);
+        salesTextArea.setEditable(false);
+
         panelReport.add(reportSdate);
         panelReport.add(datePicker);
         panelReport.add(reportEdate);
         panelReport.add(Jdatepicker);
+        panelReport.add(SalesArea);
+        panelReport.add(scrollPane);
 
-        selectedSDate = (Date) datePicker.getModel().getValue();
-        selectedEDate = (Date) Jdatepicker.getModel().getValue();
 
         memberSSN = new JLabel("SSN");
         memberSSNfield = new JTextField();
@@ -236,20 +244,31 @@ public class GUI implements ActionListener {
             }
 
             if (e.getSource() == buttonDateReport){
-                //http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component
-                // Implementera datepicker
-                try {
-                    ctrl.createReport(selectedSDate,selectedEDate);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                } catch (ExecutionException e2) {
-                    e2.printStackTrace();
-                } catch (UnknownHostException e3) {
-                    e3.printStackTrace();
-                } catch (ParseException e4) {
-                    e4.printStackTrace();
+
+                selectedSDate = (Date) datePicker.getModel().getValue();
+                selectedEDate = (Date) Jdatepicker.getModel().getValue();
+
+                if(selectedSDate == null || selectedEDate == null){
+                    System.out.println("Please pick startDate and EndDate");
+
+                }else{
+                    salesTextArea.setText("");
+                    try {
+                        ArrayList<Order> sales = ctrl.createReport(selectedSDate,selectedEDate);
+
+                        showSales(sales);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    } catch (ExecutionException e2) {
+                        e2.printStackTrace();
+                    } catch (UnknownHostException e3) {
+                        e3.printStackTrace();
+                    } catch (ParseException e4) {
+                        e4.printStackTrace();
+                    }
+                    System.out.println("GUI: Dates selected");
                 }
-                System.out.println("GUI: Dates selected");
+
             }
 
             if(e.getSource() == buttonBack) {
@@ -351,8 +370,8 @@ public class GUI implements ActionListener {
         try {
             DateFormat df = new SimpleDateFormat("MMM d HH:mm:ss yyyy");
 
-            Date date = new Date();
-            String dateFormated = df.format(date.toString());
+            Date date = Calendar.getInstance().getTime();
+            String dateFormated = df.format(date);
 
                 return dateFormated;
             } catch (Exception e1) {
@@ -360,6 +379,19 @@ public class GUI implements ActionListener {
                 return null;
             }
 
+        }
+
+        public void showSales(ArrayList<Order> orders){
+
+            System.out.println("GUI: " + orders.size());
+
+            if (orders.size() == 0){
+                salesTextArea.setText("No sales found during this time!");
+            }else{
+                for (int i = 0; i < orders.size(); i++) {
+                    salesTextArea.setText("Order: " + orders.get(i).getDate() + "\n");
+                }
+            }
         }
 
 

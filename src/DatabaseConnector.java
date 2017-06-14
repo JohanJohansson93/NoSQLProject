@@ -57,7 +57,7 @@ public class DatabaseConnector {
 
             try {
 
-                bucket = new Namespace("maps", "Ordersv5");
+                bucket = new Namespace("maps", "Ordersv6");
                 location = new Location(bucket, order.getDate());
 
                 storeValue = new StoreValue.Builder(order)
@@ -85,7 +85,7 @@ public class DatabaseConnector {
 
         ArrayList<Order> orders = new ArrayList<Order>();
 
-        bucket = new Namespace("maps", "Ordersv5");
+        bucket = new Namespace("maps", "Ordersv6");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -96,7 +96,6 @@ public class DatabaseConnector {
             RiakObject orderObjects = client.execute(fetchValue).getValue(RiakObject.class);
 
             JsonObject o = new com.google.gson.JsonParser().parse(orderObjects.getValue().toString()).getAsJsonObject();
-           // System.out.println(o.get("date").toString());
             String [] products = new String[1];
             products[0] = new String(o.get("products").toString());
 
@@ -157,9 +156,7 @@ public class DatabaseConnector {
         return ingredients;
 
     }
-    /*
-        Utgå från denna sida: http://docs.basho.com/riak/kv/2.2.3/developing/usage/updating-objects/ för att uppdatera.
-     */
+
     public void UpdateStock(ArrayList<String> ingredients) throws ExecutionException, InterruptedException {
 
         RiakObject obj;

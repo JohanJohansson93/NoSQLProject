@@ -33,6 +33,7 @@ public class Controller {
 
 
     public boolean CreateOrder(double price, boolean transactionComplete, String [] products, String date, int employeeID) throws ExecutionException, InterruptedException {
+
         ArrayList<Product> prods = new ArrayList<>();
         ArrayList<String> stock1 = new ArrayList<>();
         ArrayList<String> ingredients = new ArrayList<>();
@@ -77,6 +78,7 @@ public class Controller {
         }
         System.out.println(Orderprocessed);
         return Orderprocessed;
+
     }
 
     public void FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
@@ -145,26 +147,27 @@ public class Controller {
         return listofProducts;
     }
 
-    public void createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
+    public ArrayList<Order> createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
 
-        DateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
+        DateFormat df = new SimpleDateFormat("MMM d HH:mm:ss yyyy");
         ArrayList<Order> orderSize = db.FetchOrders();
         ArrayList<Order> orders = new ArrayList<Order>();
 
         for(int i = 0; i < orderSize.size(); i++) {
             String sales = orderSize.get(i).getDate().replaceAll("\"","").replaceAll("\"","");
-            System.out.println("CTRL Dates: " + sales);
-
             Date result =  df.parse(sales);
 
-            if(result.after(startDate) && result.before(endDate)){
-                orders.add(orderSize.get(i));
+            if(result.after(startDate)){
+                System.out.println("CTRL: " + startDate.toString());
+                if(result.before(endDate)){
+                    System.out.println("CTRL: " + endDate.toString());
+                    orders.add(orderSize.get(i));
+
+                }
             }
         }
-        for (int i = 0; i < orders.size(); i++) {
-            System.out.println("Ctrl: Orders " + orders.get(i).getDate());
-        }
-        //return orders;
+
+        return orders;
     }
 
     public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {
