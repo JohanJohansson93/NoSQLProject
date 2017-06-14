@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -348,8 +349,12 @@ public class GUI implements ActionListener {
         public String getDate() {
 
         try {
-                Date date = new Date();
-                return date.toString();
+            DateFormat df = new SimpleDateFormat("MMM d HH:mm:ss yyyy");
+
+            Date date = new Date();
+            String dateFormated = df.format(date.toString());
+
+                return dateFormated;
             } catch (Exception e1) {
                 e1.printStackTrace();
                 return null;
