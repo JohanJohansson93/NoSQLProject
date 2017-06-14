@@ -24,11 +24,11 @@ import org.jdatepicker.impl.UtilDateModel;
 public class GUI implements ActionListener {
 
     JFrame frame;
-    JPanel panelButtons, panelHeader, panelOrder, panelReport, panelMember;
+    JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
     buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
     JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate, SalesArea;
-    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, reportSDate, reportEDate;
+    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
     Product[] listOfProducts;
@@ -43,6 +43,7 @@ public class GUI implements ActionListener {
     private Date selectedSDate, selectedEDate;
     private JTextArea salesTextArea;
     private JScrollPane scrollPane;
+    private JLabel icon = new JLabel(new ImageIcon("./src/American_Beaver.jpg"));
 
 
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
@@ -52,16 +53,22 @@ public class GUI implements ActionListener {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(500, 400));
+        frame.setPreferredSize(new Dimension(600, 400));
 
         panelButtons = new JPanel(new FlowLayout());
+        panelButtonsreport = new JPanel(new FlowLayout());
+        panelButtonsmember = new JPanel(new FlowLayout());
         panelReport = new JPanel(new FlowLayout());
-        panelReport.setLayout(new GridLayout(14,1));
+        panelReport.setLayout(new GridLayout(6,1));
 
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
         header.setFont(new Font("Serif", Font.BOLD, 36));
         panelHeader.add(header);
+        panelicon = new JPanel(new FlowLayout());
+        panelicon.add(icon);
+
+
 
         buttonPlace = new JButton("Place order");
         buttonReport = new JButton("Get report");
@@ -76,15 +83,16 @@ public class GUI implements ActionListener {
         buttonEmployeeDateReport = new JButton("Get list of orders from employee");
         buttonDateReport = new JButton("Get report from chosen period");
 
-        panelReport.add(buttonDateReport);
-        panelReport.add(buttonEmployeeDateReport);
-        panelReport.add(buttonBack2);
+        panelButtonsreport.add(buttonDateReport);
+        panelButtonsreport.add(buttonEmployeeDateReport);
+        panelButtonsreport.add(buttonBack2);
         panelButtons.add(buttonPlace);
         panelButtons.add(buttonAddMember);
         panelButtons.add(buttonReport);
 
         frame.getContentPane().add(panelHeader, BorderLayout.NORTH);
         frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+        frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
 
         addListeners();
 
@@ -109,7 +117,7 @@ public class GUI implements ActionListener {
         Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
 
         SalesArea = new JLabel("Sales");
-        salesTextArea = new JTextArea("", 10, 20);
+        salesTextArea = new JTextArea("", 4, 10);
         scrollPane = new JScrollPane(salesTextArea);
         salesTextArea.setEditable(false);
 
@@ -142,8 +150,8 @@ public class GUI implements ActionListener {
         panelMember.add(memberOccupation);
         panelMember.add(memberOccupationfield);
 
-        panelMember.add(btnAddmember);
-        panelMember.add(btnbackmember);
+        panelButtonsmember.add(btnAddmember);
+        panelButtonsmember.add(btnbackmember);
 
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
@@ -221,6 +229,7 @@ public class GUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonPlace) {
             frame.remove(panelButtons);
+            frame.remove(panelicon);
             frame.getContentPane().add(panelOrder, BorderLayout.CENTER);
             frame.invalidate();
             frame.validate();
@@ -229,7 +238,9 @@ public class GUI implements ActionListener {
 
             if (e.getSource() == buttonAddMember) {
                 frame.remove(panelButtons);
+                frame.remove(panelicon);
                 frame.getContentPane().add(panelMember, BorderLayout.CENTER);
+                frame.getContentPane().add(panelButtonsmember, BorderLayout.SOUTH);
                 frame.invalidate();
                 frame.validate();
                 frame.repaint();
@@ -237,7 +248,9 @@ public class GUI implements ActionListener {
 
             if (e.getSource() == buttonReport) {
                 frame.remove(panelButtons);
+                frame.remove(panelicon);
                 frame.getContentPane().add(panelReport, BorderLayout.CENTER);
+                frame.getContentPane().add(panelButtonsreport, BorderLayout.SOUTH);
                 frame.invalidate();
                 frame.validate();
                 frame.repaint();
@@ -274,6 +287,7 @@ public class GUI implements ActionListener {
             if(e.getSource() == buttonBack) {
                 frame.remove(panelOrder);
                 frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+                frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
                 frame.invalidate();
                 frame.validate();
                 frame.repaint();
@@ -281,7 +295,9 @@ public class GUI implements ActionListener {
 
         if(e.getSource() == buttonBack2) {
             frame.remove(panelReport);
+            frame.remove(panelButtonsreport);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
             frame.invalidate();
             frame.validate();
             frame.repaint();
@@ -320,7 +336,9 @@ public class GUI implements ActionListener {
         }
         if (e.getSource() == btnbackmember){
             frame.remove(panelMember);
+            frame.remove(panelButtonsmember);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
             frame.invalidate();
             frame.validate();
             frame.repaint();
@@ -389,7 +407,7 @@ public class GUI implements ActionListener {
                 salesTextArea.setText("No sales found during this time!");
             }else{
                 for (int i = 0; i < orders.size(); i++) {
-                    salesTextArea.setText("Order: " + orders.get(i).getDate() + "\n");
+                    salesTextArea.append("Order: " + orders.get(i).getDate() + "\n");
                 }
             }
         }
