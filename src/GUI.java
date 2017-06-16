@@ -27,7 +27,8 @@ public class GUI implements ActionListener {
     JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
     buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate, SalesArea;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate
+            , reportEdate, SalesArea;
     JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
@@ -96,6 +97,9 @@ public class GUI implements ActionListener {
 
         addListeners();
 
+        employeeLabel = new JLabel("Emplyoee ID");
+        employeeField = new JTextField();
+
         reportSdate = new JLabel("Select StartDate");
 
         model = new UtilDateModel();
@@ -121,6 +125,8 @@ public class GUI implements ActionListener {
         scrollPane = new JScrollPane(salesTextArea);
         salesTextArea.setEditable(false);
 
+        panelReport.add(employeeLabel);
+        panelReport.add(employeeField);
         panelReport.add(reportSdate);
         panelReport.add(datePicker);
         panelReport.add(reportEdate);
@@ -283,6 +289,33 @@ public class GUI implements ActionListener {
                 }
 
             }
+            if (e.getSource() == buttonEmployeeDateReport){
+
+                selectedSDate = (Date) datePicker.getModel().getValue();
+                selectedEDate = (Date) Jdatepicker.getModel().getValue();
+                int employeeID = Integer.parseInt(employeeField.getText());
+
+                if(selectedSDate == null || selectedEDate == null){
+                    System.out.println("Please pick startDate and EndDate");
+
+                }else{
+                    salesTextArea.setText("");
+                    try {
+                        ArrayList<Order> sales = ctrl.createEmployeeReport(employeeID,selectedSDate,selectedEDate);
+
+                        showSales(sales);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    } catch (ExecutionException e2) {
+                        e2.printStackTrace();
+                    } catch (UnknownHostException e3) {
+                        e3.printStackTrace();
+                    } catch (ParseException e4) {
+                        e4.printStackTrace();
+                    }
+                    System.out.println("GUI: Dates selected");
+                }
+            }
 
             if(e.getSource() == buttonBack) {
                 frame.remove(panelOrder);
@@ -407,7 +440,7 @@ public class GUI implements ActionListener {
                 salesTextArea.setText("No sales found during this time!");
             }else{
                 for (int i = 0; i < orders.size(); i++) {
-                    salesTextArea.append("Order: " + orders.get(i).getDate() + "\n");
+                    salesTextArea.append("Order: " + orders.get(i).getEmployeeID() + orders.get(i).getDate() + "\n");
                 }
             }
         }
