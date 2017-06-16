@@ -180,7 +180,7 @@ public class Controller {
             int employeeId = orders.get(i).getEmployeeID();
             if ( employeeId == id) {
               empList.add(orders.get(i));
-              System.out.println(empList.get(i));
+              System.out.println(employeeId);
             }
         }
         return empList;

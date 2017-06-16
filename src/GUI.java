@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -26,9 +27,8 @@ public class GUI implements ActionListener {
     JFrame frame;
     JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember, panelEmployee, panelEmployeeButtons;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
-    buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember, btnAddEmployee, btnbackEmployee, buttonAddEmployee;
-    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate
-            , reportEdate, SalesArea, EmployeeName, EmployeeType, EmployeeComment, EmployeeWorktime, EmployeeSdate, EmployeeEdate;
+            buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember, btnAddEmployee, btnbackEmployee, buttonAddEmployee;
+    JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate, reportEdate, SalesArea, EmployeeName, EmployeeType, EmployeeComment, EmployeeWorktime, EmployeeSdate, EmployeeEdate;
     JTextField employeeField, employeeFieldId, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, employeeNamefield, employeeTypefield, employeeCommentfield, employeeWorktimefield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
@@ -61,7 +61,7 @@ public class GUI implements ActionListener {
         panelButtonsmember = new JPanel(new FlowLayout());
         panelEmployeeButtons = new JPanel(new FlowLayout());
         panelReport = new JPanel(new FlowLayout());
-        panelReport.setLayout(new GridLayout(8,1));
+        panelReport.setLayout(new GridLayout(8, 1));
 
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
@@ -69,7 +69,6 @@ public class GUI implements ActionListener {
         panelHeader.add(header);
         panelicon = new JPanel(new FlowLayout());
         panelicon.add(icon);
-
 
 
         buttonPlace = new JButton("Place order");
@@ -150,7 +149,7 @@ public class GUI implements ActionListener {
         memberOccupationfield = new JTextField();
 
         panelMember = new JPanel(new FlowLayout());
-        panelMember.setLayout(new GridLayout(14,1));
+        panelMember.setLayout(new GridLayout(14, 1));
 
         panelMember.add(memberSSN);
         panelMember.add(memberSSNfield);
@@ -177,7 +176,7 @@ public class GUI implements ActionListener {
         employeeCommentfield = new JTextField();
 
         panelEmployee = new JPanel(new FlowLayout());
-        panelEmployee.setLayout(new GridLayout(14,1));
+        panelEmployee.setLayout(new GridLayout(14, 1));
 
         EmployeeSdate = new JLabel("Select StartDate");
 
@@ -245,7 +244,7 @@ public class GUI implements ActionListener {
         orderList = new String[10];
 
 
-        for(int i = 0; i < listOfProducts.length; i++ ) {
+        for (int i = 0; i < listOfProducts.length; i++) {
             prodNameList[i] = listOfProducts[i].getName();
         }
 
@@ -254,7 +253,7 @@ public class GUI implements ActionListener {
         chooseLabel = new JLabel("Choose products");
 
         panelOrder = new JPanel(new FlowLayout());
-        panelOrder.setLayout(new GridLayout(14,1));
+        panelOrder.setLayout(new GridLayout(14, 1));
         panelOrder.add(employeeLabel);
         panelOrder.add(employeeField);
 
@@ -305,7 +304,7 @@ public class GUI implements ActionListener {
             frame.validate();
             frame.repaint();
         }
-        if (e.getSource() == buttonAddEmployee){
+        if (e.getSource() == buttonAddEmployee) {
             frame.remove(panelButtons);
             frame.remove(panelicon);
             frame.getContentPane().add(panelEmployee, BorderLayout.CENTER);
@@ -315,93 +314,91 @@ public class GUI implements ActionListener {
             frame.repaint();
         }
 
-            if (e.getSource() == buttonAddMember) {
-                frame.remove(panelButtons);
-                frame.remove(panelicon);
-                frame.getContentPane().add(panelMember, BorderLayout.CENTER);
-                frame.getContentPane().add(panelButtonsmember, BorderLayout.SOUTH);
-                frame.invalidate();
-                frame.validate();
-                frame.repaint();
-            }
+        if (e.getSource() == buttonAddMember) {
+            frame.remove(panelButtons);
+            frame.remove(panelicon);
+            frame.getContentPane().add(panelMember, BorderLayout.CENTER);
+            frame.getContentPane().add(panelButtonsmember, BorderLayout.SOUTH);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
 
-            if (e.getSource() == buttonReport) {
-                frame.remove(panelButtons);
-                frame.remove(panelicon);
-                frame.getContentPane().add(panelReport, BorderLayout.CENTER);
-                frame.getContentPane().add(panelButtonsreport, BorderLayout.SOUTH);
-                frame.invalidate();
-                frame.validate();
-                frame.repaint();
-            }
+        if (e.getSource() == buttonReport) {
+            frame.remove(panelButtons);
+            frame.remove(panelicon);
+            frame.getContentPane().add(panelReport, BorderLayout.CENTER);
+            frame.getContentPane().add(panelButtonsreport, BorderLayout.SOUTH);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
 
-            if (e.getSource() == buttonDateReport){
+        if (e.getSource() == buttonDateReport) {
 
-                selectedSDate = (Date) datePicker.getModel().getValue();
-                selectedEDate = (Date) Jdatepicker.getModel().getValue();
+            selectedSDate = (Date) datePicker.getModel().getValue();
+            selectedEDate = (Date) Jdatepicker.getModel().getValue();
 
-                if(selectedSDate == null || selectedEDate == null){
-                    System.out.println("Please pick startDate and EndDate");
+            if (selectedSDate == null || selectedEDate == null) {
+                System.out.println("Please pick startDate and EndDate");
 
-                }else{
-                    salesTextArea.setText("");
-                    try {
-                        ArrayList<Order> sales = ctrl.createReport(selectedSDate,selectedEDate);
+            } else {
+                salesTextArea.setText("");
+                try {
+                    ArrayList<Order> sales = ctrl.createReport(selectedSDate, selectedEDate);
 
-                        showSales(sales);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    } catch (ExecutionException e2) {
-                        e2.printStackTrace();
-                    } catch (UnknownHostException e3) {
-                        e3.printStackTrace();
-                    } catch (ParseException e4) {
-                        e4.printStackTrace();
-                    }
-                    System.out.println("GUI: Dates selected");
+                    showSales(sales);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                } catch (ExecutionException e2) {
+                    e2.printStackTrace();
+                } catch (UnknownHostException e3) {
+                    e3.printStackTrace();
+                } catch (ParseException e4) {
+                    e4.printStackTrace();
                 }
-
+                System.out.println("GUI: Dates selected");
             }
-            if (e.getSource() == buttonEmployeeDateReport){
 
-                selectedSDate = (Date) datePicker.getModel().getValue();
-                selectedEDate = (Date) Jdatepicker.getModel().getValue();
-                int employeeID = Integer.parseInt(employeeFieldId.getText());
+        }
+        if (e.getSource() == buttonEmployeeDateReport) {
 
-                if(selectedSDate == null || selectedEDate == null){
-                    System.out.println("Please pick startDate and EndDate");
+            selectedSDate = (Date) datePicker.getModel().getValue();
+            selectedEDate = (Date) Jdatepicker.getModel().getValue();
 
-                }else{
-                    salesTextArea.setText("");
+            if (selectedSDate == null || selectedEDate == null) {
+                System.out.println("Please pick startDate and EndDate");
 
-                    try {
-                        ArrayList<Order> sales = ctrl.createEmployeeReport(employeeID,selectedSDate,selectedEDate);
+            } else {
+                salesTextArea.setText("");
+                try {
+                    ArrayList<Order> sales = ctrl.createEmployeeReport(Integer.parseInt(employeeFieldId.getText()), selectedSDate, selectedEDate);
 
-                        showSales(sales);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    } catch (ExecutionException e2) {
-                        e2.printStackTrace();
-                    } catch (UnknownHostException e3) {
-                        e3.printStackTrace();
-                    } catch (ParseException e4) {
-                        e4.printStackTrace();
-                    }
-
-                    System.out.println("GUI: EmployeeReport");
+                    showSales(sales);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                } catch (ExecutionException e2) {
+                    e2.printStackTrace();
+                } catch (UnknownHostException e3) {
+                    e3.printStackTrace();
+                } catch (ParseException e4) {
+                    e4.printStackTrace();
                 }
+                employeeFieldId.setText("");
+                System.out.println("GUI: EmployeeReport");
             }
+        }
 
-            if(e.getSource() == buttonBack) {
-                frame.remove(panelOrder);
-                frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
-                frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
-                frame.invalidate();
-                frame.validate();
-                frame.repaint();
-            }
+        if (e.getSource() == buttonBack) {
+            frame.remove(panelOrder);
+            frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
 
-        if(e.getSource() == buttonBack2) {
+        if (e.getSource() == buttonBack2) {
             frame.remove(panelReport);
             frame.remove(panelButtonsreport);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
@@ -411,28 +408,28 @@ public class GUI implements ActionListener {
             frame.repaint();
         }
 
-            if (e.getSource() == buttonClearProd) {
-                productsLabel.setText("Products: ");
-                currentPrice = 0;
-                priceLabel.setText("" + currentPrice);
-                counter = 0;
-            }
+        if (e.getSource() == buttonClearProd) {
+            productsLabel.setText("Products: ");
+            currentPrice = 0;
+            priceLabel.setText("" + currentPrice);
+            counter = 0;
+        }
 
-            if (e.getSource() == buttonAddProduct) {
-                productsLabel.setText(productsLabel.getText() + " " + prods.getSelectedItem() + ",");
-                for(int i = 0; i < listOfProducts.length; i++) {
-                    if (prods.getSelectedItem() == listOfProducts[i].getName()) {
-                        currentPrice = (int) (currentPrice + listOfProducts[i].getDollars());
-                        priceLabel.setText("" + currentPrice);
-                        orderList[counter] = listOfProducts[i].getName();
-                        counter++;
-                    }
+        if (e.getSource() == buttonAddProduct) {
+            productsLabel.setText(productsLabel.getText() + " " + prods.getSelectedItem() + ",");
+            for (int i = 0; i < listOfProducts.length; i++) {
+                if (prods.getSelectedItem() == listOfProducts[i].getName()) {
+                    currentPrice = (int) (currentPrice + listOfProducts[i].getDollars());
+                    priceLabel.setText("" + currentPrice);
+                    orderList[counter] = listOfProducts[i].getName();
+                    counter++;
                 }
             }
+        }
 
         if (e.getSource() == btnAddmember) {
             try {
-                ctrl.CreateMember(memberSSNfield.getText(), memberAdressfield.getText(),memberOccupationfield.getText());
+                ctrl.CreateMember(memberSSNfield.getText(), memberAdressfield.getText(), memberOccupationfield.getText());
             } catch (ExecutionException e1) {
                 e1.printStackTrace();
             } catch (InterruptedException e2) {
@@ -442,7 +439,7 @@ public class GUI implements ActionListener {
             memberAdressfield.setText("");
             memberOccupationfield.setText("");
         }
-        if (e.getSource() == btnbackmember){
+        if (e.getSource() == btnbackmember) {
             frame.remove(panelMember);
             frame.remove(panelButtonsmember);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
@@ -451,26 +448,26 @@ public class GUI implements ActionListener {
             frame.validate();
             frame.repaint();
         }
-        if (e.getSource() == btnAddEmployee){
+        if (e.getSource() == btnAddEmployee) {
             selectedSdateEmployee = (Date) datePickerEmployee.getModel().getValue();
             selectedEdateEmployee = (Date) JdatepickerEmployee.getModel().getValue();
 
-            if(selectedSdateEmployee == null || selectedEdateEmployee == null){
+            if (selectedSdateEmployee == null || selectedEdateEmployee == null) {
                 System.out.println("Please pick startDate and EndDate");
 
-            }else{
+            } else {
 
-                    try {
-                        ctrl.CreateEmployee(employeeNamefield.getText(),employeeTypefield.getText(),selectedSdateEmployee.toString(),selectedEdateEmployee.toString(),
-                                employeeCommentfield.getText(),Integer.parseInt(employeeWorktimefield.getText()));
+                try {
+                    ctrl.CreateEmployee(employeeNamefield.getText(), employeeTypefield.getText(), selectedSdateEmployee.toString(), selectedEdateEmployee.toString(),
+                            employeeCommentfield.getText(), Integer.parseInt(employeeWorktimefield.getText()));
 
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    } catch (ExecutionException e2) {
-                        e2.printStackTrace();
-                    } catch (UnknownHostException e3) {
-                        e3.printStackTrace();
-                    }
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                } catch (ExecutionException e2) {
+                    e2.printStackTrace();
+                } catch (UnknownHostException e3) {
+                    e3.printStackTrace();
+                }
 
                 System.out.println("GUI: Employee created");
                 employeeNamefield.setText("");
@@ -479,7 +476,7 @@ public class GUI implements ActionListener {
                 employeeCommentfield.setText("");
             }
         }
-        if (e.getSource() == btnbackEmployee){
+        if (e.getSource() == btnbackEmployee) {
             frame.remove(panelEmployee);
             frame.remove(panelEmployeeButtons);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
@@ -492,8 +489,8 @@ public class GUI implements ActionListener {
         if (e.getSource() == buttonConfirm) {
             finalListOfProducts = new String[counter];
             int g = 0;
-            for(int k = 0; k< orderList.length; k++) {
-                for(int l = 0; l<listOfProducts.length; l++) {
+            for (int k = 0; k < orderList.length; k++) {
+                for (int l = 0; l < listOfProducts.length; l++) {
                     if (orderList[k] == listOfProducts[l].getName()) {
                         finalListOfProducts[g] = listOfProducts[l].getName();
                         g++;
@@ -501,10 +498,10 @@ public class GUI implements ActionListener {
                 }
             }
 
-            for (int d = 0; d<finalListOfProducts.length; d++) {
+            for (int d = 0; d < finalListOfProducts.length; d++) {
                 try {
                     System.out.println(finalListOfProducts[d]);
-                } catch(NullPointerException np) {
+                } catch (NullPointerException np) {
                     System.out.println("null");
                 }
             }
@@ -526,9 +523,9 @@ public class GUI implements ActionListener {
             }
         }
 
-        }
+    }
 
-        public String getDate() {
+    public String getDate() {
 
         try {
             DateFormat df = new SimpleDateFormat("MMM d HH:mm:ss yyyy");
@@ -536,33 +533,31 @@ public class GUI implements ActionListener {
             Date date = Calendar.getInstance().getTime();
             String dateFormated = df.format(date);
 
-                return dateFormated;
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                return null;
-            }
-
+            return dateFormated;
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            return null;
         }
 
-        public void showSales(ArrayList<Order> orders){
+    }
 
-            System.out.println("GUI: " + orders.size());
+    public void showSales(ArrayList<Order> orders) {
 
-            if (orders.size() == 0){
-                salesTextArea.setText("No sales found during this time!");
-            }else{
-                for (int i = 0; i < orders.size(); i++) {
-                    salesTextArea.append("Order: " + orders.get(i).getEmployeeID() + orders.get(i).getDate() + "\n");
-                }
+        System.out.println("GUI: " + orders.size());
+
+        if (orders.size() == 0) {
+            salesTextArea.setText("No sales found during this time!");
+        } else {
+            for (int i = 0; i < orders.size(); i++) {
+                salesTextArea.append("Order: " + "ID: " + orders.get(i).getEmployeeID() + "" + " Date: " + orders.get(i).getDate() + "\n");
             }
         }
+    }
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
                 try {
                     GUI gui = new GUI();
                 } catch (InterruptedException e) {
