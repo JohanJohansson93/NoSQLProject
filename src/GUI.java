@@ -24,12 +24,12 @@ import org.jdatepicker.impl.UtilDateModel;
 public class GUI implements ActionListener {
 
     JFrame frame;
-    JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember;
+    JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember, panelEmployee, panelEmployeeButtons;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
-    buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember;
+    buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember, btnAddEmployee, btnbackEmployee, buttonAddEmployee;
     JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate
-            , reportEdate, SalesArea;
-    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield;
+            , reportEdate, SalesArea, EmployeeName, EmployeeType, EmployeeComment, EmployeeWorktime, EmployeeSdate, EmployeeEdate;
+    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, employeeNamefield, employeeTypefield, employeeCommentfield, employeeWorktimefield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
     Product[] listOfProducts;
@@ -59,8 +59,9 @@ public class GUI implements ActionListener {
         panelButtons = new JPanel(new FlowLayout());
         panelButtonsreport = new JPanel(new FlowLayout());
         panelButtonsmember = new JPanel(new FlowLayout());
+        panelEmployeeButtons = new JPanel(new FlowLayout());
         panelReport = new JPanel(new FlowLayout());
-        panelReport.setLayout(new GridLayout(6,1));
+        panelReport.setLayout(new GridLayout(8,1));
 
         panelHeader = new JPanel(new FlowLayout());
         header = new JLabel("BeaverCoffee");
@@ -73,12 +74,15 @@ public class GUI implements ActionListener {
 
         buttonPlace = new JButton("Place order");
         buttonReport = new JButton("Get report");
+        buttonAddEmployee = new JButton("Add Employee");
         buttonAddMember = new JButton("Add Member");
         btnAddmember = new JButton("Add Member");
         buttonAddProduct = new JButton("Add product");
         buttonBack = new JButton("Back");
         buttonBack2 = new JButton("Back");
         btnbackmember = new JButton("Back");
+        btnAddEmployee = new JButton(("Add Employee"));
+        btnbackEmployee = new JButton("Back");
         buttonClearProd = new JButton("Clear products");
         buttonConfirm = new JButton("Confirm order");
         buttonEmployeeDateReport = new JButton("Get list of orders from employee");
@@ -88,6 +92,7 @@ public class GUI implements ActionListener {
         panelButtonsreport.add(buttonEmployeeDateReport);
         panelButtonsreport.add(buttonBack2);
         panelButtons.add(buttonPlace);
+        panelButtons.add(buttonAddEmployee);
         panelButtons.add(buttonAddMember);
         panelButtons.add(buttonReport);
 
@@ -159,6 +164,61 @@ public class GUI implements ActionListener {
         panelButtonsmember.add(btnAddmember);
         panelButtonsmember.add(btnbackmember);
 
+        EmployeeName = new JLabel("Name");
+        employeeNamefield = new JTextField();
+
+        EmployeeType = new JLabel("Occupation");
+        employeeTypefield = new JTextField();
+
+        EmployeeWorktime = new JLabel("WorktimePercentage");
+        employeeWorktimefield = new JTextField();
+
+        EmployeeComment = new JLabel("Comment");
+        employeeCommentfield = new JTextField();
+
+        panelEmployee = new JPanel(new FlowLayout());
+        panelEmployee.setLayout(new GridLayout(14,1));
+
+        EmployeeSdate = new JLabel("Select StartDate");
+
+        model = new UtilDateModel();
+        p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("tex.year", "Year");
+        datePanel = new JDatePanelImpl(model, p);
+        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+
+        EmployeeEdate = new JLabel("Select EndDate");
+
+        utilmodel = new UtilDateModel();
+        prop = new Properties();
+        prop.put("text.today", "Today");
+        prop.put("text.month", "Month");
+        prop.put("tex.year", "Year");
+        Jdatepanel = new JDatePanelImpl(utilmodel, prop);
+        Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
+
+        panelEmployee.add(EmployeeName);
+        panelEmployee.add(employeeNamefield);
+
+        panelEmployee.add(EmployeeType);
+        panelEmployee.add(employeeTypefield);
+
+        panelEmployee.add(EmployeeWorktime);
+        panelEmployee.add(employeeWorktimefield);
+
+        panelEmployee.add(EmployeeComment);
+        panelEmployee.add(employeeCommentfield);
+
+        panelEmployeeButtons.add(btnAddEmployee);
+        panelEmployeeButtons.add(btnbackEmployee);
+
+        panelEmployee.add(EmployeeSdate);
+        panelEmployee.add(datePicker);
+        panelEmployee.add(EmployeeEdate);
+        panelEmployee.add(Jdatepicker);
+
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
 
@@ -220,6 +280,7 @@ public class GUI implements ActionListener {
     public void addListeners() {
         buttonAddMember.addActionListener(this);
         buttonPlace.addActionListener(this);
+        buttonAddEmployee.addActionListener(this);
         buttonReport.addActionListener(this);
         buttonAddProduct.addActionListener(this);
         buttonConfirm.addActionListener(this);
@@ -229,6 +290,8 @@ public class GUI implements ActionListener {
         buttonDateReport.addActionListener(this);
         btnbackmember.addActionListener(this);
         btnAddmember.addActionListener(this);
+        btnAddEmployee.addActionListener(this);
+        btnbackEmployee.addActionListener(this);
     }
 
     @Override
@@ -237,6 +300,15 @@ public class GUI implements ActionListener {
             frame.remove(panelButtons);
             frame.remove(panelicon);
             frame.getContentPane().add(panelOrder, BorderLayout.CENTER);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
+        if (e.getSource() == buttonAddEmployee){
+            frame.remove(panelButtons);
+            frame.remove(panelicon);
+            frame.getContentPane().add(panelEmployee, BorderLayout.CENTER);
+            frame.getContentPane().add(panelEmployeeButtons, BorderLayout.SOUTH);
             frame.invalidate();
             frame.validate();
             frame.repaint();
@@ -300,6 +372,7 @@ public class GUI implements ActionListener {
 
                 }else{
                     salesTextArea.setText("");
+
                     try {
                         ArrayList<Order> sales = ctrl.createEmployeeReport(employeeID,selectedSDate,selectedEDate);
 
@@ -313,7 +386,8 @@ public class GUI implements ActionListener {
                     } catch (ParseException e4) {
                         e4.printStackTrace();
                     }
-                    System.out.println("GUI: Dates selected");
+
+                    System.out.println("GUI: EmployeeReport");
                 }
             }
 
@@ -370,6 +444,39 @@ public class GUI implements ActionListener {
         if (e.getSource() == btnbackmember){
             frame.remove(panelMember);
             frame.remove(panelButtonsmember);
+            frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
+            frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+        }
+        if (e.getSource() == btnAddEmployee){
+            selectedSDate = (Date) datePicker.getModel();
+            selectedEDate = (Date) Jdatepicker.getModel();
+
+            if(selectedSDate == null || selectedEDate == null){
+                System.out.println("Please pick startDate and EndDate");
+
+            }else{
+
+                    try {
+                        ctrl.CreateEmployee(employeeNamefield.getText(),employeeTypefield.getText(),selectedSDate.toString(),selectedEDate.toString(),
+                                employeeCommentfield.getText(),Integer.parseInt(employeeWorktimefield.getText()));
+
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    } catch (ExecutionException e2) {
+                        e2.printStackTrace();
+                    } catch (UnknownHostException e3) {
+                        e3.printStackTrace();
+                    }
+
+                System.out.println("GUI: Employee created");
+            }
+        }
+        if (e.getSource() == btnbackEmployee){
+            frame.remove(panelEmployee);
+            frame.remove(panelEmployeeButtons);
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
             frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
             frame.invalidate();

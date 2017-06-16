@@ -185,9 +185,10 @@ public class Controller {
         return empList;
     }
 
-    public void CreateEmployee(String name,String type, String Sdate, String Edate, int [] orderID, String comments ) throws InterruptedException, ExecutionException, UnknownHostException {
-        Employee employee = new Employee(name,type, Sdate, Edate, orderID, comments);
+    public void CreateEmployee(String name,String type, String Sdate, String Edate, String comments, int worktime ) throws InterruptedException, ExecutionException, UnknownHostException {
+        Employee employee = new Employee(name,type, Sdate, Edate,comments, worktime);
         db.CreateEmplyoee(employee);
+        System.out.println("Ctrl: CreateEmployee method called");
     }
 
     public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {

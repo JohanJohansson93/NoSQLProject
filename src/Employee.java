@@ -4,16 +4,16 @@
  */
 public class Employee {
 
-    private String  Name, Start_date, End_date, Type;
-    private int [] OrderID;
+    private String  Name, Start_date, End_date, Type, Comment;
+    private int Worktime;
 
-
-    public Employee(String name,String type, String Sdate, String Edate, int [] orderID){
+    public Employee(String name, String type, String Sdate, String Edate, String comment, int worktime){
         this.Name = name;
         this.Type = type;
         this.Start_date = Sdate;
         this.End_date = Edate;
-        this.OrderID = orderID;
+        this.Comment = comment;
+        this.Worktime = worktime;
     }
 
     public String getName() {
@@ -48,11 +48,18 @@ public class Employee {
         Type = type;
     }
 
-    public int[] getOrderID() {
-        return OrderID;
+    public String getComment() {
+        return Comment;
+    }
+    public void setComment(String comment) {
+        Comment = comment;
     }
 
-    public void setOrderID(int[] orderID) {
-        OrderID = orderID;
+    public int getWorktime() {
+        return Worktime;
+    }
+
+    public void setWorktime(int worktime) {
+        Worktime = worktime;
     }
 }
