@@ -5,6 +5,8 @@ import java.util.Calendar;
 
 /**
  * Created by Johan on 2017-06-14.
+ * Class DataLabelFormatter
+ * Sets standard date format. Used in GUI class together with the datepicker.
  */
 public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 

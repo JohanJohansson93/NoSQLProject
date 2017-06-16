@@ -1,13 +1,18 @@
+
 /**
  * Created by Johan on 2017-05-23.
+ * Class Product
+ * A class for a product.
+ * Regarding the currencies, priceInPounds is the only one in use.
  */
+
 public class Product {
 
     private String Name;
     private double pounds, dollars, crowns;
-    private String [] string;
+    private String[] string;
 
-    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, String [] string){
+    public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, String[] string) {
         this.Name = name;
         this.pounds = PriceinPounds;
         this.dollars = PriceinDollars;

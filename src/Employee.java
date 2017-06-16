@@ -1,13 +1,16 @@
 
 /**
  * Created by Johan on 2017-05-23.
+ * Class Employee
+ * An employee with the properties of name, profession,
+ * start and end date, comment and worktime.
  */
 public class Employee {
 
-    private String  Name, Start_date, End_date, Type, Comment;
+    private String Name, Start_date, End_date, Type, Comment;
     private int Worktime;
 
-    public Employee(String name, String type, String Sdate, String Edate, String comment, int worktime){
+    public Employee(String name, String type, String Sdate, String Edate, String comment, int worktime) {
         this.Name = name;
         this.Type = type;
         this.Start_date = Sdate;
@@ -51,6 +54,7 @@ public class Employee {
     public String getComment() {
         return Comment;
     }
+
     public void setComment(String comment) {
         Comment = comment;
     }

@@ -1,16 +1,21 @@
+
 /**
  * Created by Johan on 2017-05-23.
+ * Class Member
+ * Creates an member, containing ssn number, occupation and address
  */
 public class Member {
 
     private int SSN;
     private String Occupation, Address;
 
-    public Member(int ssn, String occupation, String address){
-            this.SSN = ssn;
-            this.Occupation = occupation;
-            this.Address = address;
-    };
+    public Member(int ssn, String occupation, String address) {
+        this.SSN = ssn;
+        this.Occupation = occupation;
+        this.Address = address;
+    }
+
+    ;
 
     public int getSSN() {
         return SSN;

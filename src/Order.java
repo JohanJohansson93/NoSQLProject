@@ -2,6 +2,8 @@ import java.util.Date;
 
 /**
  * Created by Johan on 2017-05-23.
+ * Class Order
+ * An order, containing price, products, date created, employee id
  */
 public class Order {
 
@@ -12,7 +14,7 @@ public class Order {
     private int EmployeeID;
 
 
-    public Order(double price, boolean transactionComplete, String[] products, String Date, int employeeID){
+    public Order(double price, boolean transactionComplete, String[] products, String Date, int employeeID) {
         this.Price = price;
         this.TransactionComplete = transactionComplete;
         this.products = products;
