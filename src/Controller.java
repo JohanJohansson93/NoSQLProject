@@ -170,8 +170,24 @@ public class Controller {
         return orders;
     }
 
-    public void CreateEmployee(Employee employee) throws InterruptedException, ExecutionException, UnknownHostException {
-            db.CreateEmplyoee(employee);
+    public ArrayList<Order> createEmployeeReport(int id, Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException{
+
+        ArrayList<Order> orders;
+        ArrayList<Order> empList = new ArrayList<>();
+        orders = createReport(startDate, endDate);
+
+        for(int i = 0; i < orders.size(); i++) {
+            int employeeId = orders.get(i).getEmployeeID();
+            if ( employeeId== id) {
+              empList.add(orders.get(i));
+            }
+        }
+        return empList;
+    }
+
+    public void CreateEmployee(String name,String type, String Sdate, String Edate, int [] orderID, String comments ) throws InterruptedException, ExecutionException, UnknownHostException {
+        Employee employee = new Employee(name,type, Sdate, Edate, orderID, comments);
+        db.CreateEmplyoee(employee);
     }
 
     public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {
