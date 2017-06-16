@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
-import javax.swing.text.DefaultFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +12,20 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created by Johan on 2017-05-23.
+ * This is the GUI class for the program.
+ * It implements ActionListener.
  */
 public class GUI implements ActionListener {
 
+    /*
+        Declare all instancevariables.
+    */
     JFrame frame;
     JPanel panelButtons, panelHeader, panelicon, panelOrder, panelReport, panelMember, panelButtonsreport, panelButtonsmember, panelEmployee, panelEmployeeButtons;
     JButton buttonPlace, buttonReport, buttonAddMember, buttonAddProduct, buttonConfirm, buttonClearProd, buttonBack, buttonBack2,
@@ -46,7 +48,9 @@ public class GUI implements ActionListener {
     private JScrollPane scrollPane;
     private JLabel icon = new JLabel(new ImageIcon("./src/American_Beaver.jpg"));
 
-
+    /*
+        The GUI constructor that creates each specific part of the GUI.
+     */
     public GUI() throws InterruptedException, ExecutionException, UnknownHostException {
         ctrl = new Controller(this);
         listOfProducts = ctrl.FetchProducts();
@@ -124,7 +128,7 @@ public class GUI implements ActionListener {
         Jdatepanel = new JDatePanelImpl(utilmodel, prop);
         Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
 
-        SalesArea = new JLabel("Sales");
+        SalesArea = new JLabel("Sales/Orders");
         salesTextArea = new JTextArea("", 4, 10);
         scrollPane = new JScrollPane(salesTextArea);
         salesTextArea.setEditable(false);
@@ -275,7 +279,9 @@ public class GUI implements ActionListener {
         System.out.println("GUI: Gui complete");
 
     }
-
+    /*
+        This method adds all buttons to the ActionListener.
+     */
     public void addListeners() {
         buttonAddMember.addActionListener(this);
         buttonPlace.addActionListener(this);
@@ -295,6 +301,10 @@ public class GUI implements ActionListener {
     }
 
     @Override
+    /*
+        The actionPerformed method. This method handles all
+        logic when a specific button is pressed.
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonPlace) {
             frame.remove(panelButtons);
@@ -369,7 +379,11 @@ public class GUI implements ActionListener {
             if (selectedSDate == null || selectedEDate == null) {
                 System.out.println("Please pick startDate and EndDate");
 
-            } else {
+            }
+            if(employeeFieldId.getText().equals("") ){
+                System.out.println("Please add an employeeID");
+            }
+            else {
                 salesTextArea.setText("");
                 try {
                     ArrayList<Order> sales = ctrl.createEmployeeReport(Integer.parseInt(employeeFieldId.getText()), selectedSDate, selectedEDate);
@@ -428,12 +442,16 @@ public class GUI implements ActionListener {
         }
 
         if (e.getSource() == btnAddmember) {
-            try {
-                ctrl.CreateMember(memberSSNfield.getText(), memberAdressfield.getText(), memberOccupationfield.getText());
-            } catch (ExecutionException e1) {
-                e1.printStackTrace();
-            } catch (InterruptedException e2) {
-                e2.printStackTrace();
+            if (memberSSNfield.getText().equals("") || memberAdressfield.getText().equals("") || memberOccupationfield.getText().equals("")){
+                System.out.println("Please type some information in the fields SSN, Address, and Occupation!");
+            }else{
+                try {
+                    ctrl.CreateMember(memberSSNfield.getText(), memberAdressfield.getText(), memberOccupationfield.getText());
+                } catch (ExecutionException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e2) {
+                    e2.printStackTrace();
+                }
             }
             memberSSNfield.setText("");
             memberAdressfield.setText("");
@@ -455,7 +473,11 @@ public class GUI implements ActionListener {
             if (selectedSdateEmployee == null || selectedEdateEmployee == null) {
                 System.out.println("Please pick startDate and EndDate");
 
-            } else {
+            }if(employeeNamefield.getText().equals("") || employeeTypefield.getText().equals("") || employeeWorktimefield.getText().equals("")
+                    || employeeCommentfield.getText().equals(""))
+            {
+                System.out.println("Please type some information in the fields Name, Occupation, Worktime, and Comment!");
+            }else  {
 
                 try {
                     ctrl.CreateEmployee(employeeNamefield.getText(), employeeTypefield.getText(), selectedSdateEmployee.toString(), selectedEdateEmployee.toString(),
@@ -487,44 +509,53 @@ public class GUI implements ActionListener {
         }
 
         if (e.getSource() == buttonConfirm) {
-            finalListOfProducts = new String[counter];
-            int g = 0;
-            for (int k = 0; k < orderList.length; k++) {
-                for (int l = 0; l < listOfProducts.length; l++) {
-                    if (orderList[k] == listOfProducts[l].getName()) {
-                        finalListOfProducts[g] = listOfProducts[l].getName();
-                        g++;
+            if (employeeField.getText().equals("")){
+                System.out.println("Please enter an employeeID");
+            }else{
+                finalListOfProducts = new String[counter];
+                int g = 0;
+                for (int k = 0; k < orderList.length; k++) {
+                    for (int l = 0; l < listOfProducts.length; l++) {
+                        if (orderList[k] == listOfProducts[l].getName()) {
+                            finalListOfProducts[g] = listOfProducts[l].getName();
+                            g++;
+                        }
                     }
                 }
-            }
 
-            for (int d = 0; d < finalListOfProducts.length; d++) {
+                for (int d = 0; d < finalListOfProducts.length; d++) {
+                    try {
+                        System.out.println(finalListOfProducts[d]);
+                    } catch (NullPointerException np) {
+                        System.out.println("null");
+                    }
+                }
+
                 try {
-                    System.out.println(finalListOfProducts[d]);
-                } catch (NullPointerException np) {
-                    System.out.println("null");
+                    Boolean processed = false;
+                    processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), Integer.parseInt(employeeField.getText()));
+                    if (processed) {
+                        System.out.println("GUI: Order placed");
+                        orderList = new String[10];
+                    } else {
+                        System.out.println("GUI: Something wrong with order");
+                    }
+                } catch (ExecutionException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+
                 }
             }
 
-            try {
-                Boolean processed = false;
-                processed = ctrl.CreateOrder(Double.parseDouble(priceLabel.getText()), false, finalListOfProducts, getDate(), Integer.parseInt(employeeField.getText()));
-                if (processed) {
-                    System.out.println("GUI: Order placed");
-                    orderList = new String[10];
-                } else {
-                    System.out.println("GUI: Something wrong with order");
-                }
-            } catch (ExecutionException e1) {
-                e1.printStackTrace();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-
-            }
         }
 
     }
 
+    /**
+     * Method that returns todays date as a String.
+     * @return
+     */
     public String getDate() {
 
         try {
@@ -541,6 +572,10 @@ public class GUI implements ActionListener {
 
     }
 
+    /**
+     * Method that goes through every order and prints it.
+     * @param orders
+     */
     public void showSales(ArrayList<Order> orders) {
 
         System.out.println("GUI: " + orders.size());
@@ -549,12 +584,15 @@ public class GUI implements ActionListener {
             salesTextArea.setText("No sales found during this time!");
         } else {
             for (int i = 0; i < orders.size(); i++) {
-                salesTextArea.append("Order: " + "ID: " + orders.get(i).getEmployeeID() + "" + " Date: " + orders.get(i).getDate() + "\n");
+                salesTextArea.append("Order: " + "ID: " + orders.get(i).getEmployeeID() + "," + " Date: " + orders.get(i).getDate() + "\n");
             }
         }
     }
 
-
+    /**
+     * The main method that starts the program.
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
