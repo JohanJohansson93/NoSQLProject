@@ -29,7 +29,7 @@ public class GUI implements ActionListener {
     buttonDateReport, buttonEmployeeDateReport, btnbackmember, btnAddmember, btnAddEmployee, btnbackEmployee, buttonAddEmployee;
     JLabel header, employeeLabel, memberLabel, chooseLabel, priceLabel, productsLabel, memberSSN, memberaddress, memberOccupation, reportSdate
             , reportEdate, SalesArea, EmployeeName, EmployeeType, EmployeeComment, EmployeeWorktime, EmployeeSdate, EmployeeEdate;
-    JTextField employeeField, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, employeeNamefield, employeeTypefield, employeeCommentfield, employeeWorktimefield;
+    JTextField employeeField, employeeFieldId, memberField, memberSSNfield, memberAdressfield, memberOccupationfield, employeeNamefield, employeeTypefield, employeeCommentfield, employeeWorktimefield;
     JComboBox prods;
     JRadioButton radioEmployee, radioMember;
     Product[] listOfProducts;
@@ -103,7 +103,7 @@ public class GUI implements ActionListener {
         addListeners();
 
         employeeLabel = new JLabel("Emplyoee ID");
-        employeeField = new JTextField();
+        employeeFieldId = new JTextField();
 
         reportSdate = new JLabel("Select StartDate");
 
@@ -131,7 +131,7 @@ public class GUI implements ActionListener {
         salesTextArea.setEditable(false);
 
         panelReport.add(employeeLabel);
-        panelReport.add(employeeField);
+        panelReport.add(employeeFieldId);
         panelReport.add(reportSdate);
         panelReport.add(datePicker);
         panelReport.add(reportEdate);
@@ -366,7 +366,7 @@ public class GUI implements ActionListener {
 
                 selectedSDate = (Date) datePicker.getModel().getValue();
                 selectedEDate = (Date) Jdatepicker.getModel().getValue();
-                int employeeID = Integer.parseInt(employeeField.getText());
+                int employeeID = Integer.parseInt(employeeFieldId.getText());
 
                 if(selectedSDate == null || selectedEDate == null){
                     System.out.println("Please pick startDate and EndDate");
