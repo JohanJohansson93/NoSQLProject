@@ -5,19 +5,20 @@ import com.basho.riak.client.core.RiakNode;
 import com.basho.riak.client.core.query.Location;
 import com.basho.riak.client.core.query.Namespace;
 import com.basho.riak.client.core.query.RiakObject;
-import com.basho.riak.client.core.util.BinaryValue;
 import com.google.gson.*;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Johan on 2017-04-11.
+ * The Database class that handles all operations to the Riak Database.
  */
 public class DatabaseConnector {
-
+    /*
+        Declare instancevariables.
+     */
     private RiakCluster cluster;
     private Location location;
     private FetchValue fetchValue;
@@ -25,7 +26,10 @@ public class DatabaseConnector {
     private RiakClient client;
     private Namespace bucket;
 
-
+    /**
+     * The constructor for the database.
+     * This calls for the setUpCluster method and creates a new RiakClient instance.
+     */
     public DatabaseConnector(){
         try {
             setUpCluster();
@@ -35,6 +39,10 @@ public class DatabaseConnector {
         this.client = new RiakClient(cluster);
     }
 
+    /**
+     * This method sets up the connection to the RiakNode.
+     * @throws UnknownHostException
+     */
     private void setUpCluster() throws UnknownHostException{
         RiakNode node = new RiakNode.Builder()
                 .withRemoteAddress("127.0.0.1")
@@ -50,7 +58,13 @@ public class DatabaseConnector {
     }
 
 
-
+    /**
+     * This method takes an order object as argument and passes the object to the database.
+     * @param order
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public boolean CreateOrder(Order order) throws ExecutionException, InterruptedException {
 
             boolean processed = false;
@@ -80,7 +94,13 @@ public class DatabaseConnector {
         return processed;
     }
 
-
+    /**
+     * A method that fetches all the orders from the database.
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws UnknownHostException
+     */
     public ArrayList<Order> FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
 
         ArrayList<Order> orders = new ArrayList<Order>();
@@ -104,6 +124,13 @@ public class DatabaseConnector {
         return orders;
     }
 
+    /**
+     * This method stores all the products in the database.
+     * @param products
+     * @throws UnknownHostException
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
         bucket = new Namespace("maps", "Productsv2.2");
@@ -118,6 +145,12 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * A method that fills the specified bucket with Stock objects.
+     * @param stock
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
         bucket = new Namespace("maps", "StockObjects");
@@ -132,6 +165,12 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * A method that returns all stock objects from the database.
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public ArrayList<Stock> FetchStock() throws ExecutionException, InterruptedException {
         RiakObject obj;
         ArrayList<Stock> ingredients = new ArrayList<Stock>();
@@ -157,6 +196,12 @@ public class DatabaseConnector {
 
     }
 
+    /**
+     * A method that updates one or more Stock objects in the database.
+     * @param ingredients
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public void UpdateStock(ArrayList<String> ingredients) throws ExecutionException, InterruptedException {
 
         RiakObject obj;
@@ -192,6 +237,13 @@ public class DatabaseConnector {
 
     }
 
+    /**
+     * A method that returns all products in the database.
+     * @return
+     * @throws UnknownHostException
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public ArrayList<Product> FetchProducts() throws UnknownHostException, ExecutionException, InterruptedException {
 
         RiakObject obj;
@@ -221,6 +273,13 @@ public class DatabaseConnector {
         return products;
     }
 
+    /**
+     * Method that takes an employee object as argument and passes it to the database.
+     * @param employee
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws UnknownHostException
+     */
     public void CreateEmplyoee(Employee employee) throws ExecutionException, InterruptedException, UnknownHostException {
 
         bucket = new Namespace("maps", "EmployeesTest");
@@ -233,6 +292,12 @@ public class DatabaseConnector {
         client.execute(storeValue);
     }
 
+    /**
+     * Method that takes a member object as argument and passes it to the database.
+     * @param member
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public void CreateMember(Member member) throws ExecutionException, InterruptedException {
 
         bucket = new Namespace("maps", "Members");
@@ -246,6 +311,10 @@ public class DatabaseConnector {
         System.out.println("DB: Member stored");
     }
 
+    /**
+     * Method that shutdown the connection to the database.
+     * @throws UnknownHostException
+     */
     public void ShutDownCluster() throws UnknownHostException {
         cluster.shutdown();
         System.out.println("Cluster shutdown");
