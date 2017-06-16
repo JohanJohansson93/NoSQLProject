@@ -37,11 +37,11 @@ public class GUI implements ActionListener {
     int counter = 0;
     Controller ctrl;
     int currentPrice = 0;
-    private UtilDateModel model, utilmodel;
-    private Properties p, prop;
-    private JDatePanelImpl datePanel, Jdatepanel;
-    private JDatePickerImpl datePicker, Jdatepicker;
-    private Date selectedSDate, selectedEDate;
+    private UtilDateModel model, utilmodel, employeeModel, utilEmodel;
+    private Properties p, prop, pEmployee, propEmployee;
+    private JDatePanelImpl datePanel, Jdatepanel, datePanelEmployee, JdatepanelEmployee;
+    private JDatePickerImpl datePicker, Jdatepicker, datePickerEmployee, JdatepickerEmployee;
+    private Date selectedSDate, selectedEDate, selectedSdateEmployee, selectedEdateEmployee;
     private JTextArea salesTextArea;
     private JScrollPane scrollPane;
     private JLabel icon = new JLabel(new ImageIcon("./src/American_Beaver.jpg"));
@@ -181,23 +181,23 @@ public class GUI implements ActionListener {
 
         EmployeeSdate = new JLabel("Select StartDate");
 
-        model = new UtilDateModel();
-        p = new Properties();
-        p.put("text.today", "Today");
-        p.put("text.month", "Month");
-        p.put("tex.year", "Year");
-        datePanel = new JDatePanelImpl(model, p);
-        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        employeeModel = new UtilDateModel();
+        pEmployee = new Properties();
+        pEmployee.put("text.today", "Today");
+        pEmployee.put("text.month", "Month");
+        pEmployee.put("tex.year", "Year");
+        datePanelEmployee = new JDatePanelImpl(employeeModel, pEmployee);
+        datePickerEmployee = new JDatePickerImpl(datePanelEmployee, new DateLabelFormatter());
 
         EmployeeEdate = new JLabel("Select EndDate");
 
-        utilmodel = new UtilDateModel();
-        prop = new Properties();
-        prop.put("text.today", "Today");
-        prop.put("text.month", "Month");
-        prop.put("tex.year", "Year");
-        Jdatepanel = new JDatePanelImpl(utilmodel, prop);
-        Jdatepicker = new JDatePickerImpl(Jdatepanel, new DateLabelFormatter());
+        utilEmodel = new UtilDateModel();
+        propEmployee = new Properties();
+        propEmployee.put("text.today", "Today");
+        propEmployee.put("text.month", "Month");
+        propEmployee.put("tex.year", "Year");
+        JdatepanelEmployee = new JDatePanelImpl(utilEmodel, propEmployee);
+        JdatepickerEmployee = new JDatePickerImpl(JdatepanelEmployee, new DateLabelFormatter());
 
         panelEmployee.add(EmployeeName);
         panelEmployee.add(employeeNamefield);
@@ -215,9 +215,9 @@ public class GUI implements ActionListener {
         panelEmployeeButtons.add(btnbackEmployee);
 
         panelEmployee.add(EmployeeSdate);
-        panelEmployee.add(datePicker);
+        panelEmployee.add(datePickerEmployee);
         panelEmployee.add(EmployeeEdate);
-        panelEmployee.add(Jdatepicker);
+        panelEmployee.add(JdatepickerEmployee);
 
         employeeLabel = new JLabel("Employee ID");
         employeeField = new JTextField();
@@ -288,6 +288,7 @@ public class GUI implements ActionListener {
         buttonBack.addActionListener(this);
         buttonBack2.addActionListener(this);
         buttonDateReport.addActionListener(this);
+        buttonEmployeeDateReport.addActionListener(this);
         btnbackmember.addActionListener(this);
         btnAddmember.addActionListener(this);
         btnAddEmployee.addActionListener(this);
@@ -451,16 +452,16 @@ public class GUI implements ActionListener {
             frame.repaint();
         }
         if (e.getSource() == btnAddEmployee){
-            selectedSDate = (Date) datePicker.getModel();
-            selectedEDate = (Date) Jdatepicker.getModel();
+            selectedSdateEmployee = (Date) datePickerEmployee.getModel().getValue();
+            selectedEdateEmployee = (Date) JdatepickerEmployee.getModel().getValue();
 
-            if(selectedSDate == null || selectedEDate == null){
+            if(selectedSdateEmployee == null || selectedEdateEmployee == null){
                 System.out.println("Please pick startDate and EndDate");
 
             }else{
 
                     try {
-                        ctrl.CreateEmployee(employeeNamefield.getText(),employeeTypefield.getText(),selectedSDate.toString(),selectedEDate.toString(),
+                        ctrl.CreateEmployee(employeeNamefield.getText(),employeeTypefield.getText(),selectedSdateEmployee.toString(),selectedEdateEmployee.toString(),
                                 employeeCommentfield.getText(),Integer.parseInt(employeeWorktimefield.getText()));
 
                     } catch (InterruptedException e1) {
@@ -472,6 +473,10 @@ public class GUI implements ActionListener {
                     }
 
                 System.out.println("GUI: Employee created");
+                employeeNamefield.setText("");
+                employeeTypefield.setText("");
+                employeeWorktimefield.setText("");
+                employeeCommentfield.setText("");
             }
         }
         if (e.getSource() == btnbackEmployee){

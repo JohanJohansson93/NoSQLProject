@@ -178,8 +178,9 @@ public class Controller {
 
         for(int i = 0; i < orders.size(); i++) {
             int employeeId = orders.get(i).getEmployeeID();
-            if ( employeeId== id) {
+            if ( employeeId == id) {
               empList.add(orders.get(i));
+              System.out.println(empList.get(i));
             }
         }
         return empList;

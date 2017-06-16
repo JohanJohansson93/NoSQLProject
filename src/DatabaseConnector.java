@@ -223,7 +223,7 @@ public class DatabaseConnector {
 
     public void CreateEmplyoee(Employee employee) throws ExecutionException, InterruptedException, UnknownHostException {
 
-        bucket = new Namespace("maps", "Employees");
+        bucket = new Namespace("maps", "EmployeesTest");
         location = new Location(bucket, employee.getName());
 
         storeValue = new StoreValue.Builder(employee)
