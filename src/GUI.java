@@ -415,6 +415,8 @@ public class GUI implements ActionListener {
         if (e.getSource() == buttonBack2) {
             frame.remove(panelReport);
             frame.remove(panelButtonsreport);
+            employeeFieldId.setText("");
+            salesTextArea.setText("");
             frame.getContentPane().add(panelButtons, BorderLayout.CENTER);
             frame.getContentPane().add(panelicon, BorderLayout.SOUTH);
             frame.invalidate();

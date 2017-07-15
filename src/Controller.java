@@ -7,9 +7,13 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Johan on 2017-05-23.
+ * The controller that acts as an intermediator between the GUI and the database.
  */
 public class Controller {
 
+    /*
+        Declare instance variables.
+     */
     private GUI gui;
     private DatabaseConnector db;
     private Order order;
@@ -20,18 +24,26 @@ public class Controller {
     private Product [] listofProducts;
     private String [] espresso, Latte, cappucino, chocolate, coffee;
 
-
+    /*
+        The constructor for the controller.
+        It instantiate the databaseconnector.
+     */
     public Controller(GUI GUI){
         this.gui = GUI;
         db = new DatabaseConnector();
-        try {
-            //Fillproducts();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+    /*
+        A second constructor that instantiate the databaseconnector.
+     */
+    public Controller(){
+        db = new DatabaseConnector();
     }
 
-
+    /*
+        This method takes several arguments as parameters to create a specific order.
+        It calls FetchProducts in the databaseConnector to fetch the products and then updates the stock.
+        At last it calls the method CreateOrder in databaseConnector and retrieves true or false depending on the status of the order.
+     */
     public boolean CreateOrder(double price, boolean transactionComplete, String [] products, String date, int employeeID) throws ExecutionException, InterruptedException {
 
         ArrayList<Product> prods = new ArrayList<>();
@@ -80,19 +92,21 @@ public class Controller {
         return Orderprocessed;
 
     }
-
+    /*
+        A method that fetches the current orders from the database.
+     */
     public void FetchOrders() throws ExecutionException, InterruptedException, UnknownHostException {
         db.FetchOrders();
     }
     /*
-    public void DeleteOrder(Order order) throws ExecutionException, InterruptedException {
-        db.DeleteOrder(order);
-    }
-    */
+        A method that places the products into the database.
+     */
     public void CreateProducts(Product [] products) throws InterruptedException, ExecutionException, UnknownHostException {
         db.CreateProducts(products);
     }
-
+    /*
+        This method fills the database with products and ingridients.
+     */
     public void Fillproducts() throws InterruptedException, ExecutionException, UnknownHostException {
 
         stock = new Stock[5];
@@ -103,7 +117,7 @@ public class Controller {
         stock[3] = new Stock("Whipped Cream",1000);
         stock[4] = new Stock("Whole Bean French Roast", 1000);
 
-        /*
+
         espresso = new String[1];
         Latte = new String[2];
         cappucino = new String[2];
@@ -131,11 +145,13 @@ public class Controller {
 
 
         db.CreateProducts(listofProducts);
-        */
+
         db.FillStock(stock);
         System.out.println("Ctrl: Stock filled");
     }
-
+    /*
+        This method fetches all products from the database and returns a list of products.
+     */
     public Product [] FetchProducts() throws InterruptedException, ExecutionException, UnknownHostException {
         ArrayList<Product> productsAL = db.FetchProducts();
         listofProducts = new Product[productsAL.size()];
@@ -146,7 +162,10 @@ public class Controller {
 
         return listofProducts;
     }
-
+    /*
+        This method fetches specific orders based on a specific timestamp.
+        If orders exists in the given timestamp it returns the orders.
+     */
     public ArrayList<Order> createReport(Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException {
 
         DateFormat df = new SimpleDateFormat("MMM d HH:mm:ss yyyy");
@@ -169,7 +188,9 @@ public class Controller {
 
         return orders;
     }
-
+    /*
+        This method fetches orders based on an employeeID.
+     */
     public ArrayList<Order> createEmployeeReport(int id, Date startDate, Date endDate) throws InterruptedException, ExecutionException, UnknownHostException, ParseException{
 
         ArrayList<Order> orders;
@@ -185,22 +206,21 @@ public class Controller {
         }
         return empList;
     }
-
+    /*
+        This method takes the given arguments and stores an employee's data in the database.
+     */
     public void CreateEmployee(String name,String type, String Sdate, String Edate, String comments, int worktime ) throws InterruptedException, ExecutionException, UnknownHostException {
         Employee employee = new Employee(name,type, Sdate, Edate,comments, worktime);
         db.CreateEmplyoee(employee);
         System.out.println("Ctrl: CreateEmployee method called");
     }
-
+    /*
+        This method takes the members data and stores it in the database.
+     */
     public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {
             Member member = new Member(Integer.parseInt(SSN), address, occupation);
             db.CreateMember(member);
             System.out.println("Ctrl: CreateMember method called");
     }
-
-    public void ShutdownDB() throws UnknownHostException {
-        db.ShutDownCluster();
-    }
-
 
 }
