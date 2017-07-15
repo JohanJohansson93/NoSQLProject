@@ -15,8 +15,14 @@ public class Order {
     private String date;
     private int EmployeeID;
 
-    /*
-       Constructor that takes several arguments that acts as data for the Order object.
+
+    /**
+     * Creates and order object, representing an order
+     * @param price of product
+     * @param transactionComplete boolean value, returns either true or false whether the transactions is done
+     * @param products ordered
+     * @param Date of order
+     * @param employeeID id of employee
      */
     public Order(double price, boolean transactionComplete, String[] products, String Date, int employeeID) {
         this.Price = price;
@@ -24,64 +30,93 @@ public class Order {
         this.products = products;
         this.date = Date;
         this.EmployeeID = employeeID;
-
     }
-    /*
-       Method that returns the price.
+
+
+    /**
+     * getPrice
+     * @return the price of the product
      */
     public double getPrice() {
         return Price;
     }
-    /*
-       Method that sets the price.
+
+
+    /**
+     * setPrice
+     * @param price sets the price of the product
      */
     public void setPrice(double price) {
         Price = price;
     }
-    /*
-       Method that returns a boolean.
+
+
+    /**
+     * isTransactionComplete
+     * @return true or false
      */
     public boolean isTransactionComplete() {
         return TransactionComplete;
     }
-    /*
-       Method that sets the boolean.
+
+
+    /**
+     * setTransactionComplete
+     * @param transactionComplete sets transaction either complete or not
      */
     public void setTransactionComplete(boolean transactionComplete) {
         TransactionComplete = transactionComplete;
     }
-    /*
-       Method that returns an array with products.
+
+
+    /**
+     * getProducts
+     * @return all products
      */
     public String[] getProducts() {
         return products;
     }
-    /*
-       Method that sets the array with products.
+
+
+    /**
+     * setProducts
+     * @param products sets a value on the product array
      */
     public void setProducts(String[] products) {
         this.products = products;
     }
-    /*
-       Method that returns the date.
+
+
+    /**
+     * getDate
+     * @return a date of the creation of the product
      */
     public String getDate() {
         return date;
     }
-    /*
-       Method that sets the date.
+
+
+    /**
+     * setDate
+     * @param Date sets date
      */
     public void setDate(String Date) {
         date = Date;
     }
-    /*
-       Method that returns the employeeID.
+
+
+    /**
+     * getEmployeeID
+     * @return an employee id
      */
     public int getEmployeeID() {
         return EmployeeID;
     }
-    /*
-       Method that sets the ID.
+
+
+    /**
+     * setEmployeeID
+     * @param employeeID sets an employee id
      */
     public void setEmployeeID(int employeeID) {
         EmployeeID = employeeID;

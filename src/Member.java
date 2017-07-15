@@ -10,46 +10,69 @@ public class Member {
     */
     private int SSN;
     private String Occupation, Address;
-    /*
-       This contrsuctor takes several arguments for the member object.
+
+
+    /**
+     * Creates a member object, representing a member
+     * @param ssn personal id
+     * @param occupation work title
+     * @param address
      */
     public Member(int ssn, String occupation, String address) {
         this.SSN = ssn;
         this.Occupation = occupation;
         this.Address = address;
     }
-    /*
-       This method returns the ssn.
+
+
+    /**
+     * getSSN
+     * @return a personal id number
      */
     public int getSSN() {
         return SSN;
     }
-    /*
-       This method sets the ssn.
+
+
+    /**
+     * setSSN
+     * @param SSN sets a SSN number
      */
     public void setSSN(int SSN) {
         this.SSN = SSN;
     }
-    /*
-       This method returns the occupation.
+
+
+    /**
+     * getOccupation
+     * @return an occupation for a member
      */
     public String getOccupation() {
         return Occupation;
     }
-    /*
-       This method sets the occupation.
+
+
+    /**
+     * setOccupation
+     * @param occupation sets an occupation
      */
     public void setOccupation(String occupation) {
         Occupation = occupation;
     }
-    /*
-       This method returns the address.
+
+
+    /**
+     * getAddress
+     * @return an address for a member
      */
     public String getAddress() {
         return Address;
     }
-    /*
-       This method sets the address.
+
+
+    /**
+     * setAddress
+     * @param address sets an address
      */
     public void setAddress(String address) {
         Address = address;

@@ -13,8 +13,15 @@ public class Product {
     private String Name;
     private double pounds, dollars, crowns;
     private String[] string;
-    /*
-       Constructor that takes several arguments for the Product Object.
+
+
+    /**
+     * Creates a new product object, representing a product
+     * @param name of product
+     * @param PriceinPounds
+     * @param PriceinDollars
+     * @param PriceinCrowns
+     * @param string array with stock names
      */
     public Product(String name, double PriceinPounds, double PriceinDollars, double PriceinCrowns, String[] string) {
         this.Name = name;
@@ -23,20 +30,29 @@ public class Product {
         this.crowns = PriceinCrowns;
         this.string = string;
     }
-    /*
-       This method returns the name.
+
+
+    /**
+     * getName
+     * @return a name
      */
     public String getName() {
         return Name;
     }
-    /*
-       Method that sets the name.
+
+
+    /**
+     * setName
+     * @param name sets a product name
      */
     public void setName(String name) {
         Name = name;
     }
-    /*
-       This method returns the pounds.
+
+
+    /**
+     * getPounds
+     * @return pound currency
      */
     public double getPounds() {
         return pounds;
@@ -71,14 +87,20 @@ public class Product {
     public void setCrowns(double crowns) {
         this.crowns = crowns;
     }
-    /*
-       Method that returns the stock array.
+
+
+    /**
+     * getStock
+     * @return stock names
      */
     public String[] getStock() {
         return string;
     }
-    /*
-        This method sets the array.
+
+
+    /**
+     * setString
+     * @param string sets stock name
      */
     public void setString(String[] string) {
         this.string = string;

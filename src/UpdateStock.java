@@ -11,12 +11,24 @@ public class UpdateStock extends UpdateValue.Update<Stock> {
     private int newamount;
     private String newname;
 
+    /**
+     * Creates a new UpdateStock object that represents
+     * an updated stock item
+     * @param name the name to be updated
+     * @param amount the quantity to be updated
+     */
     public UpdateStock(String name, int amount) {
         this.newname = name;
         this.newamount = amount;
         System.out.println("UpdateStock: ");
     }
 
+    /**
+     * apply method, takes an stock parameter
+     * and updates the new amount and name
+     * @param newstock
+     * @return an updated stock item
+     */
     @Override
     public Stock apply(Stock newstock) {
         System.out.println("UpdateStock: apply");
