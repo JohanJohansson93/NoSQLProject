@@ -72,7 +72,6 @@ public class Controller {
             parts = stock1.get(i).split(",");
             for (int j = 0; j < parts.length; j++) {
                     String ingredientString = parts[j].replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").replaceAll("\"","");
-                    System.out.println("Item: " + ingredientString);
                     ingredients.add(ingredientString);
             }
         }
@@ -105,7 +104,7 @@ public class Controller {
         db.CreateProducts(products);
     }
     /*
-        This method fills the database with products and ingridients.
+        This method fills the database with products and ingriedients.
      */
     public void Fillproducts() throws InterruptedException, ExecutionException, UnknownHostException {
 
@@ -177,9 +176,7 @@ public class Controller {
             Date result =  df.parse(sales);
 
             if(result.after(startDate)){
-                System.out.println("CTRL: " + startDate.toString());
                 if(result.before(endDate)){
-                    System.out.println("CTRL: " + endDate.toString());
                     orders.add(orderSize.get(i));
 
                 }
@@ -201,7 +198,6 @@ public class Controller {
             int employeeId = orders.get(i).getEmployeeID();
             if ( employeeId == id) {
               empList.add(orders.get(i));
-              System.out.println(employeeId);
             }
         }
         return empList;
@@ -212,7 +208,6 @@ public class Controller {
     public void CreateEmployee(String name,String type, String Sdate, String Edate, String comments, int worktime ) throws InterruptedException, ExecutionException, UnknownHostException {
         Employee employee = new Employee(name,type, Sdate, Edate,comments, worktime);
         db.CreateEmplyoee(employee);
-        System.out.println("Ctrl: CreateEmployee method called");
     }
     /*
         This method takes the members data and stores it in the database.
@@ -220,7 +215,6 @@ public class Controller {
     public void CreateMember(String SSN, String address, String occupation) throws ExecutionException, InterruptedException {
             Member member = new Member(Integer.parseInt(SSN), address, occupation);
             db.CreateMember(member);
-            System.out.println("Ctrl: CreateMember method called");
     }
 
 }

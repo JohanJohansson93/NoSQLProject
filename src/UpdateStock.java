@@ -20,7 +20,6 @@ public class UpdateStock extends UpdateValue.Update<Stock> {
     public UpdateStock(String name, int amount) {
         this.newname = name;
         this.newamount = amount;
-        System.out.println("UpdateStock: ");
     }
 
     /**
@@ -31,7 +30,6 @@ public class UpdateStock extends UpdateValue.Update<Stock> {
      */
     @Override
     public Stock apply(Stock newstock) {
-        System.out.println("UpdateStock: apply");
         newstock.setAmount(newamount);
         newstock.setName(newname);
         System.out.println(newstock.getName());

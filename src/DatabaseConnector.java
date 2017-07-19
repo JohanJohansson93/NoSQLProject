@@ -71,7 +71,7 @@ public class DatabaseConnector {
 
             try {
 
-                bucket = new Namespace("maps", "OrderS");
+                bucket = new Namespace("maps", "OrderS1");
                 location = new Location(bucket, order.getDate());
 
                 storeValue = new StoreValue.Builder(order)
@@ -105,7 +105,7 @@ public class DatabaseConnector {
 
         ArrayList<Order> orders = new ArrayList<Order>();
 
-        bucket = new Namespace("maps", "OrderS");
+        bucket = new Namespace("maps", "OrderS1");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -133,7 +133,7 @@ public class DatabaseConnector {
      */
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "ProductS");
+        bucket = new Namespace("maps", "ProductS1");
 
         for (Product items: products) {
 
@@ -153,7 +153,7 @@ public class DatabaseConnector {
      */
     public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "StockObjectS");
+        bucket = new Namespace("maps", "StockObjectS1");
 
         for (Stock items: stock) {
             System.out.println("DB FillStock: " + items.getName());
@@ -175,7 +175,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Stock> ingredients = new ArrayList<Stock>();
 
-        bucket = new Namespace("maps", "StockObjectS");
+        bucket = new Namespace("maps", "StockObjectS1");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -187,7 +187,6 @@ public class DatabaseConnector {
 
             obj = res.getValue(RiakObject.class);
             JsonObject o = new com.google.gson.JsonParser().parse(obj.getValue().toString()).getAsJsonObject();
-            System.out.println("DB FetchStock: " + o);
 
             ingredients.add(new Stock(o.get("name").toString(), o.get("amount").getAsInt()));
         }
@@ -206,7 +205,7 @@ public class DatabaseConnector {
 
         RiakObject obj;
 
-        bucket = new Namespace("maps", "StockObjectS");
+        bucket = new Namespace("maps", "StockObjectS1");
 
         for (int i = 0; i < ingredients.size(); i++) {
 
@@ -249,7 +248,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Product> products = new ArrayList<Product>();
 
-        bucket = new Namespace("maps", "ProductS");
+        bucket = new Namespace("maps", "ProductS1");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -282,7 +281,7 @@ public class DatabaseConnector {
      */
     public void CreateEmplyoee(Employee employee) throws ExecutionException, InterruptedException, UnknownHostException {
 
-        bucket = new Namespace("maps", "EmployeesTestS");
+        bucket = new Namespace("maps", "EmployeesTestS1");
         location = new Location(bucket, employee.getName());
 
         storeValue = new StoreValue.Builder(employee)
@@ -300,7 +299,7 @@ public class DatabaseConnector {
      */
     public void CreateMember(Member member) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "MemberS");
+        bucket = new Namespace("maps", "MemberS1");
         location = new Location(bucket, Integer.toString(member.getSSN()));
 
         storeValue = new StoreValue.Builder(member)
@@ -320,19 +319,4 @@ public class DatabaseConnector {
         System.out.println("Cluster shutdown");
     }
 
-    public static void main(String [] args){
-        try{
-            DatabaseConnector db = new DatabaseConnector();
-           // db.GetKeys("Employees");
-          // db.FetchProducts();
-          //  db.DeleteOrder();
-           // db.CreateEmplyoee();
-           // db.FetchStock();
-            db.FetchOrders();
-            db.ShutDownCluster();
-        }catch (Exception e){
-            System.out.print(e);
-        }
-
-    }
 }
