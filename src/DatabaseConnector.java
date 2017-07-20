@@ -71,7 +71,7 @@ public class DatabaseConnector {
 
             try {
 
-                bucket = new Namespace("maps", "OrderS1");
+                bucket = new Namespace("maps", "Order");
                 location = new Location(bucket, order.getDate());
 
                 storeValue = new StoreValue.Builder(order)
@@ -105,7 +105,7 @@ public class DatabaseConnector {
 
         ArrayList<Order> orders = new ArrayList<Order>();
 
-        bucket = new Namespace("maps", "OrderS1");
+        bucket = new Namespace("maps", "Order");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -133,7 +133,7 @@ public class DatabaseConnector {
      */
     public void CreateProducts(Product [] products) throws UnknownHostException, ExecutionException, InterruptedException {
         
-        bucket = new Namespace("maps", "ProductS1");
+        bucket = new Namespace("maps", "Product");
 
         for (Product items: products) {
 
@@ -153,7 +153,7 @@ public class DatabaseConnector {
      */
     public void FillStock(Stock [] stock) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "StockObjectS1");
+        bucket = new Namespace("maps", "Stock");
 
         for (Stock items: stock) {
             System.out.println("DB FillStock: " + items.getName());
@@ -175,7 +175,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Stock> ingredients = new ArrayList<Stock>();
 
-        bucket = new Namespace("maps", "StockObjectS1");
+        bucket = new Namespace("maps", "Stock");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -205,7 +205,7 @@ public class DatabaseConnector {
 
         RiakObject obj;
 
-        bucket = new Namespace("maps", "StockObjectS1");
+        bucket = new Namespace("maps", "Stock");
 
         for (int i = 0; i < ingredients.size(); i++) {
 
@@ -248,7 +248,7 @@ public class DatabaseConnector {
         RiakObject obj;
         ArrayList<Product> products = new ArrayList<Product>();
 
-        bucket = new Namespace("maps", "ProductS1");
+        bucket = new Namespace("maps", "Product");
         ListKeys lk = new ListKeys.Builder(bucket).build();
         ListKeys.Response response = client.execute(lk);
 
@@ -281,7 +281,7 @@ public class DatabaseConnector {
      */
     public void CreateEmplyoee(Employee employee) throws ExecutionException, InterruptedException, UnknownHostException {
 
-        bucket = new Namespace("maps", "EmployeesTestS1");
+        bucket = new Namespace("maps", "Employee");
         location = new Location(bucket, employee.getName());
 
         storeValue = new StoreValue.Builder(employee)
@@ -299,7 +299,7 @@ public class DatabaseConnector {
      */
     public void CreateMember(Member member) throws ExecutionException, InterruptedException {
 
-        bucket = new Namespace("maps", "MemberS1");
+        bucket = new Namespace("maps", "Member");
         location = new Location(bucket, Integer.toString(member.getSSN()));
 
         storeValue = new StoreValue.Builder(member)
